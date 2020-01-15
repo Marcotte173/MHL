@@ -42,7 +42,6 @@ public class Game
 
     internal static void Play(Game game)
     {
-        Console.Clear();
         game.aScore = Utilities.RandomInt(0, 5);
         game.bScore = Utilities.RandomInt(0, 5);
         game.aShots = game.aScore * Utilities.RandomInt(2, 5);
@@ -86,13 +85,9 @@ public class Game
             game.b.Loss++;
             game.loser = game.b;
         }
-        Console.WriteLine(string.Format("{0,-30}{1,-10}", game.a.Name, game.b.Name));
-        Console.WriteLine(string.Format("{0,-30}{1,-10}", game.aScore, game.bScore));
         game.played = true;
         foreach (Player p in game.a.Roster) if (p != null) p.GamesPlayed++;
         foreach (Player p in game.b.Roster) if (p != null) p.GamesPlayed++;
-        Console.WriteLine("");
-        Utilities.KeyPress();
     }
 
     internal static void Warmup()

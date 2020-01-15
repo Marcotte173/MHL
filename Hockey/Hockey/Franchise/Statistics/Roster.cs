@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class Roster
 {
-    public static Player[] list = new Player[19]
+    public static Player[] list = new Player[21]
     {
         null,
         Team.list[0].Line1[0], Team.list[0].Line1[1], Team.list[0].Line1[2],
@@ -18,24 +18,26 @@ public class Roster
         Team.list[0].Bench[1],
         Team.list[0].Bench[2],
         Team.list[0].Bench[3],
-        Team.list[0].Bench[4]
+        Team.list[0].Bench[4],
+        Team.list[0].Goalies[0],
+        Team.list[0].Goalies[1]
     };
     internal static void Menu()
     {
         Player chosen = null;
         Console.Clear();
-        Console.WriteLine("Would you like to look at [P]layers or [G]oalies?");
+        Console.WriteLine("Who would you like to take a look at?\n\n[1]Players\n[2]Goalies\n");
         string choice = Utilities.Choice();
-        if (choice == "p") chosen = DraftDisplay.Players(Team.list[0].Roster.ToList());
-        else if (choice == "g") chosen = DraftDisplay.Players(Team.list[0].GoalieRoster.ToList());
+        if (choice == "1") chosen = DraftDisplay.Players(Team.list[0].Roster.ToList());
+        else if (choice == "2") chosen = DraftDisplay.Players(Team.list[0].GoalieRoster.ToList());
         if (chosen != null)
         {
             Coach.Name(chosen, 50, 20);
-            Coach.String("What would you like to see?", 50, 22);
-            Coach.String("[A]ttributes\t\t[S]tats", 50, 24);
+            Coach.String("[1]Attributes", 50, 22);
+            Coach.String("[2]Stats", 50, 23);
             string choice1 = Utilities.Choice();
-            if (choice1 == "s") Statistics.Individual(chosen);
-            else if (choice1 == "a") Player.ExaminePlayer(chosen);
+            if (choice1 == "2") Statistics.Individual(chosen);
+            else if (choice1 == "1") Player.ExaminePlayer(chosen);
         }
     }
 }

@@ -120,7 +120,7 @@ public class Player
         }        
         if (Create.defenceList.Contains(p) || Create.goalieList.Contains(p) || Create.forwardList.Contains(p))
         {
-            Console.SetCursorPosition(0, Console.WindowHeight - 4);
+            Console.SetCursorPosition(0, Console.WindowHeight - 5);
             if (Utilities.CheckMoney(p.Price, Team.list[0])) Aquire.Hire(p, Team.list[0]);
         }
         else Utilities.KeyPress();

@@ -101,10 +101,18 @@ public class Schedule
     internal static void Display()
     {
         Console.WriteLine("MHL Schedule\n\n");
+        int counter=0;
         foreach (Day d in Schedule.days)
         {
+            if (counter == 15)
+            {
+                Utilities.KeyPress();
+                Console.Clear();
+                Console.WriteLine("MHL Schedule\n\n");
+            } 
             Console.WriteLine(string.Format("{0,-100}{1,-50}", Colour.PASS + $"{Time.Days[d.TheDay]}" + Colour.RESET + ", " + Colour.PASS + $"{Time.Weeks[d.TheWeek]}" + Colour.RESET + " week of " + Colour.PASS + $"{Time.Months[d.TheMonth]}" + Colour.RESET + ". ", Colour.TEAM + $"{d.TheGame.A.Name} " + Colour.RESET + "vs " + Colour.TEAM + $"{d.TheGame.B.Name}" + Colour.RESET));
             if (d.TheDay == 3) Console.WriteLine("");
+            counter++;
         }
         Utilities.KeyPress();
     }

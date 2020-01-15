@@ -84,9 +84,9 @@ internal class Utilities
 
     internal static bool Confirm()
     {
-        Console.WriteLine(Colour.RESET + "\n[Y]es       [N]o");
+        Console.WriteLine(Colour.RESET + "\n[1]Yes\n[2]No");
         string confirm = Console.ReadKey(true).KeyChar.ToString().ToLower();
-        return (confirm == "y") ? true : false;
+        return (confirm == "1") ? true : false;
     }
 
     internal static bool CheckMoney(double price, Team t)

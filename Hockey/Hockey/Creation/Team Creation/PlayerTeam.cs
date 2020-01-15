@@ -16,30 +16,30 @@ public class PlayerTeam:Team
     public override void Draft(List<Player> f, List<Player> d, List<Player> g, Player chosen, int round)
     {
         Console.WriteLine($"\nYou currently have {forward}/10 forwards, {defence}/5 defencemen, and {goalie}/2 goalies.\n\nYou have ${money} available\n");
-        Console.WriteLine("Would you like to view [A]vailable players or your [C]urrent team?");
+        Console.WriteLine("What would you like to view? \n\n[1]Available players\n[2]Current team");
         string choice = Console.ReadKey(true).KeyChar.ToString().ToLower();
-        if (choice == "a") Available(f, d, g, chosen);
+        if (choice == "1") Available(f, d, g, chosen);
         else if (choice == "x") money = 0;
-        else if (choice == "c") Current(f, d, g, chosen);
+        else if (choice == "2") Current(f, d, g, chosen);
         global::Draft.Menu();
     }
 
     internal void Current(List<Player> f, List<Player> d, List<Player> g, Player chosen)
     {
         Console.Clear();
-        Console.WriteLine("Would you like to take a look at [P]layers or [G]oalies?\n");
+        Console.WriteLine("Who would you like to take a look at?\n\n[1]Players\n[2]Goalies\n");
         string choice = Utilities.Choice();
-        if (choice == "p") chosen = DraftDisplay.Players(roster.ToList());
-        else if (choice == "g") chosen = DraftDisplay.Players(goalieRoster.ToList());
+        if (choice == "1") chosen = DraftDisplay.Players(roster.ToList());
+        else if (choice == "2") chosen = DraftDisplay.Players(goalieRoster.ToList());
         if (chosen != null) Player.ExaminePlayer(chosen);
     }
 
     private void Available(List<Player> f, List<Player> d, List<Player> g, Player chosen)
     {
         Console.Clear();
-        Console.WriteLine("Would you like to take a look at [F]orwards, [D]efencemen or [G]oalies?\n");
+        Console.WriteLine("Who would you like to take a look at?\n\n[1]Forwards\n[2]Defence\n[3]Goalies\n");
         string choice = Utilities.Choice();
-        if (choice == "f")
+        if (choice == "1")
         {
             if (forward >= 10)
             {
@@ -50,7 +50,7 @@ public class PlayerTeam:Team
             }
             chosen = DraftDisplay.Players(f);
         }
-        else if (choice == "d")
+        else if (choice == "2")
         {
             if (defence >= 5)
             {
@@ -61,7 +61,7 @@ public class PlayerTeam:Team
             }
             chosen = DraftDisplay.Players(d);
         }
-        else if (choice == "g")
+        else if (choice == "3")
         {
             if (goalie >= 2)
             {
@@ -76,11 +76,11 @@ public class PlayerTeam:Team
         if (chosen == null) global::Draft.Menu();
         Console.Clear();
         Console.WriteLine(Colour.NAME + $"{chosen.Name}\t" + Colour.OVERALL + $"{chosen.Overall}\t" + Colour.PRICE + $"{chosen.Price}" + Colour.RESET);
-        Console.WriteLine("\nWould you like to [E]xamine or [H]ire this player?");
+        Console.WriteLine("\n[1]Examine\n[2]Hire");
         Console.WriteLine($"\nYou have ${Money}");
         string choice1 = Utilities.Choice();
-        if (choice1 == "e") Player.ExaminePlayer(chosen);
-        else if (choice1 == "h")
+        if (choice1 == "1") Player.ExaminePlayer(chosen);
+        else if (choice1 == "2")
         {
             Console.Clear();
             if (Utilities.CheckMoney(chosen.Price, Team.list[0])) Aquire.Hire(chosen, Team.list[0]);

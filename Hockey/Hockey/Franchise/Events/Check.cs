@@ -38,14 +38,21 @@ public class Check
         else if (game != null)
         {
             Console.WriteLine("Game Today");
-            Console.SetCursorPosition(0, 4);
+            Console.SetCursorPosition(0, 5);
             Console.WriteLine(Colour.TEAM + game.A.Name + Colour.RESET + " vs " + Colour.TEAM + game.B.Name + Colour.RESET);
-            Console.SetCursorPosition(0, 8);
-            if (Check.MyGame(game)) Console.WriteLine("Your team plays today. Make sure to warm up. Maybe consider getting your team a little edge.");
-            else Console.WriteLine("Your team doesn't play today, but it's still worth your while to pay attention.\nYou can use this chance to scout other players and maybe tip the balances in someone's favor.");
-            Console.SetCursorPosition(0, Console.WindowHeight - 10);
-            if (Check.MyGame(game)) Console.WriteLine("[T]oday's game\t\t[I]nterference\t\t[W]armup");
-            else Console.WriteLine("[T]oday's game\t\t[I]nterference");
+            if (game.Played)
+            {
+                Console.SetCursorPosition(8, 7);
+                Console.WriteLine(Colour.GOAL + game.AScore + Colour.RESET);
+                Console.SetCursorPosition(33, 7);
+                Console.WriteLine(Colour.GOAL + game.BScore + Colour.RESET);
+            }            
+            else
+            {
+                Console.SetCursorPosition(0 , 10);
+                if (Check.MyGame(game)) Console.WriteLine("Your team plays today. Make sure to warm up. Maybe consider getting your team a little edge.");
+                else Console.WriteLine("Your team doesn't play today, but it's still worth your while to pay attention.\nYou can use this chance to scout other players and maybe tip the balances in someone's favor.");
+            }                     
         }
     }
 }

@@ -13,7 +13,7 @@ public class Time
 
     static string[] days = new string[] { "none", "Monday", "Wednesday", "Friday", "The weekend" };
     static string[] weeks = new string[] { "none", "first", "second", "third", "fourth" };
-    static string[] months = new string[] { "none", "September", "October", "January", "February" };
+    static string[] months = new string[] { "none", "September", "October", "November", "December" };
 
     public static void PassTime(int amount)
     {

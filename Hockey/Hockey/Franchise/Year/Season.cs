@@ -52,10 +52,12 @@ internal class Season
                 Team.list[i].DLine2[m] = defence[0];
                 defence.RemoveAt(0);
             }
+            for (int o = 0; o < 2; o++)
+            {
+                Team.list[i].Goalies[o] = Team.list[i].GoalieRoster[o];
+            }
             Team.list[i].Bench[0] = forward[0];
             Team.list[i].Bench[1] = defence[0];
-            Team.list[i].StartingGoalie = Team.list[i].GoalieRoster[0];
-            Team.list[i].StartingGoalie = Team.list[i].GoalieRoster[1];
         }
     }
 
@@ -63,22 +65,40 @@ internal class Season
     {
         while (season)
         {
+            Statistics.LeaderboardCheck();
             Game game = Check.Game();
             Console.Clear();
             Time.Display();
             Check.Event(game);
-            Console.SetCursorPosition(0, Console.WindowHeight - 8);
-            Console.WriteLine("[G]m actions\t\t[C]oach actions");
-            Console.WriteLine("\n[R]osters\t\t[S]tandings\t\t[L]eaderboard");
-            Console.WriteLine("\n\n\n[N]ext day");
+            Console.SetCursorPosition(0, Console.WindowHeight - 13);
+            if (Check.GameToday())
+            {
+                if (game.Played == false && Check.MyGame(game)) Console.WriteLine("[1]Play your game today");
+                else if (game.Played == false && Check.MyGame(game)==false) Console.WriteLine("[1]Watch the game today");
+                else Console.WriteLine("[x]There are no games today");
+            }                
+            else Console.WriteLine("[x]There are no games today");
+            if (Check.GameToday()) 
+            {
+                if (game.Played == false && Check.MyGame(game)) Console.WriteLine("[2]Warm up");
+                else Console.WriteLine("[x]Your team is not playing today");
+            }
+            else Console.WriteLine("[x]Your team is not playing today");
+            Console.WriteLine("[x]There are no events today");
+            Console.WriteLine("[4]Coach actions");
+            Console.WriteLine("[5]Gm actions");
+            Console.WriteLine("[6]Rosters");
+            Console.WriteLine("[7]Standings");
+            if (Statistics.leaderboardList.Count > 0) Console.WriteLine("[8]Leaderboard");
+            else Console.WriteLine("[x]No one has points yet");
+            Console.WriteLine("\n\n[0]Next day");
             string choice = Utilities.Choice();
             if (Check.GameToday())
             {
-                if (choice == "t" && game.Played == false) Game.Play(game);
-                else if (choice == "i") Interference.GameDay(Check.MyGame(game));
-                else if (Check.MyGame(game) && (choice == "w")) Game.Warmup();
+                if (choice == "1" && game.Played == false) Game.Play(game);
+                else if (Check.MyGame(game) && (choice == "2")) Game.Warmup();
             }
-            if (choice == "n")
+            if (choice == "0")
             {
                 if (game == null || game.Played) Time.PassTime(1);
                 else
@@ -88,11 +108,11 @@ internal class Season
                     Utilities.KeyPress();
                 }
             }
-            else if (choice == "g") GM.Menu();
-            else if (choice == "c") Coach.Menu();
-            else if (choice == "r") Roster.Menu();
-            else if (choice == "s") Standings.Display();
-            else if (choice == "l") Statistics.LeaderBoard();
+            else if (choice == "4") Coach.Menu(); 
+            else if (choice == "5") GM.Menu();
+            else if (choice == "6") Roster.Menu();
+            else if (choice == "7") Standings.Display();
+            else if (choice == "8") if (Statistics.leaderboardList.Count >0) Statistics.LeaderBoard();
         }
         Console.Clear();
         Console.WriteLine("Cool Beans");
