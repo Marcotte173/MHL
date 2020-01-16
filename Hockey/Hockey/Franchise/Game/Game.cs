@@ -59,31 +59,44 @@ public class Game
 
     private static void GameRecap(Game game)
     {
-        game.winner = (game.aScore > game.bScore) ? game.a : (game.aScore > game.bScore) ? game.b : (Utilities.RandomInt(0, 2) == 0) ? game.a : game.b;
-        if (game.winner == game.a) game.a.Win++;
-        else if (game.winner == game.b) game.b.Win++;
-        if (game.aScore == game.bScore && game.winner == game.a)
+        Team a = game.a;
+        Team b = game.b;
+        if (game.aScore == game.bScore)
         {
-            game.b.OTLoss++;
-            game.otLoser = game.b;
-            game.aScore++;
+            int roll = Utilities.RandomInt(0, 2);
+            if (roll == 0)
+            {
+                game.aScore++;
+                game.Winner = a;
+                game.otLoser = b;
+                a.Win++;
+                b.OTLoss++;
+            }
+            else 
+            {
+                game.bScore++;
+                game.Winner = b;
+                game.otLoser = a;
+                b.Win++;
+                a.OTLoss++;
+            }
         }
-        else if (game.aScore == game.bScore && game.winner == game.b)
+        else
         {
-            game.a.OTLoss++;
-            game.otLoser = game.a;
-            game.bScore++;
-        }
-        if (game.winner != game.a && game.otLoser != game.a)
-        {
-            game.a.Loss++;
-            game.loser = game.a;
-        }
-
-        if (game.winner != game.b && game.otLoser != game.b)
-        {
-            game.b.Loss++;
-            game.loser = game.b;
+            if (game.aScore > game.bScore)
+            {
+                game.Winner = a;
+                game.loser = b;
+                a.Win++;
+                b.Loss++;
+            }
+            else
+            {
+                game.Winner = b;
+                game.loser = a;
+                b.Win++;
+                a.Loss++;
+            }
         }
         game.played = true;
         foreach (Player p in game.a.Roster) if (p != null) p.GamesPlayed++;
