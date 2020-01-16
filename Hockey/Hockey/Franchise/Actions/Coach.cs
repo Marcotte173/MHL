@@ -30,22 +30,13 @@ public class Coach
     {
         Player chosen = null;
         chosen = (x > 0 && x < 21) ? Roster.list[x] : null;
-        if (chosen != null)
-        {
-            Display();
-            Name(chosen, 80, 20);
-            String("[1]Examine", 80, 22);
-            String("[2]Swap", 80, 23);
-            string choice = Utilities.Choice();
-            if (choice == "1")
-            {
-                Examine(x,chosen);
-            }
-            if (choice == "2")
-            {
-                Swap(x,chosen);
-            }
-        }
+        Display();
+        Name(chosen, 80, 20);
+        if (chosen != null) String("[2]Examine", 80, 23);
+        String("[1]Swap", 80, 22);
+        string choice = Utilities.Choice();
+        if (chosen != null) if (choice == "2") Examine(x, chosen);
+        if (choice == "1") Swap(x, chosen);   
         Menu();
     }
 
@@ -69,7 +60,7 @@ public class Coach
         {            
             Player swap = (y > 0 && y < 21) ? Roster.list[y] : null;
             Name(swap, 80, 25);
-            if (swap != null && chosen != swap)
+            if (chosen != swap)
             {
                 Roster.list[x] = swap;
                 Roster.list[y] = chosen;
@@ -81,7 +72,7 @@ public class Coach
         }
     }
 
-    private static void NewLines()
+    internal static void NewLines()
     {
         Team.list[0].Roster[0] = Team.list[0].Line1[0]   = Roster.list[1];
         Team.list[0].Roster[1] = Team.list[0].Line1[1]   = Roster.list[2];
@@ -120,22 +111,30 @@ public class Coach
     internal static void Name( Player p, int x, int y)
     {
         Console.SetCursorPosition(x, y);
-        if (p.Position == "Forward") Console.Write(Colour.GOAL + p.Name + Colour.RESET);
-        else if (p.Position == "Defence") Console.Write(Colour.FIGHT + p.Name + Colour.RESET);
-        else Console.Write(Colour.PRICE + p.Name + Colour.RESET);
-        Console.SetCursorPosition(x + 25, y);
-        Console.Write(Colour.SECONDARY + p.Overall + Colour.RESET);
+        if (p != null) 
+        {
+            if (p.Position == "Forward") Console.Write(Colour.GOAL + p.Name + Colour.RESET);
+            else if (p.Position == "Defence") Console.Write(Colour.FIGHT + p.Name + Colour.RESET);
+            else Console.Write(Colour.PRICE + p.Name + Colour.RESET);
+            Console.SetCursorPosition(x + 25, y);
+            Console.Write(Colour.SECONDARY + p.Overall + Colour.RESET);
+        }
+        else Console.Write($"None");
     }
 
     internal static void Name(int num, Player p, int x, int y)
     {
         Console.SetCursorPosition(x, y);
         Console.Write($"[{num}] ");
-        if (p.Position == "Forward") Console.Write(Colour.GOAL + p.Name + Colour.RESET);
-        else if (p.Position == "Defence") Console.Write(Colour.FIGHT + p.Name + Colour.RESET);
-        else Console.Write(Colour.PRICE + p.Name + Colour.RESET);
-        Console.SetCursorPosition(x + 25, y);
-        Console.Write(Colour.SECONDARY + p.Overall + Colour.RESET);
+        if (p != null)
+        {
+            if (p.Position == "Forward") Console.Write(Colour.GOAL + p.Name + Colour.RESET);
+            else if (p.Position == "Defence") Console.Write(Colour.FIGHT + p.Name + Colour.RESET);
+            else Console.Write(Colour.PRICE + p.Name + Colour.RESET);
+            Console.SetCursorPosition(x + 25, y);
+            Console.Write(Colour.SECONDARY + p.Overall + Colour.RESET);
+        }
+        else Console.Write($"None");
     }
 
     internal static void String(string s, int x, int y)
@@ -199,8 +198,7 @@ public class Coach
         String("Bench", Colour.POSITION, 0, 20, true);
         for (int i = 0; i < 5; i++)
         {
-            if (Roster.list[14+i] != null) { Name(14 + i, Roster.list[14+i], 0, 22 + i); }
-            else Console.Write($"\n[x] None");
-        }        
-    }
+            Name(14 + i, Roster.list[14+i], 0, 22 + i); 
+        }
+    }  
 }

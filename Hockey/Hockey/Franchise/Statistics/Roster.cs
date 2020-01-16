@@ -35,9 +35,25 @@ public class Roster
             Coach.Name(chosen, 50, 20);
             Coach.String("[1]Attributes", 50, 22);
             Coach.String("[2]Stats", 50, 23);
+            Coach.String("[3]Release", 50, 24);
             string choice1 = Utilities.Choice();
             if (choice1 == "2") Statistics.Individual(chosen);
             else if (choice1 == "1") Player.ExaminePlayer(chosen);
+            else if (choice1 == "3")
+            {
+                Console.Clear();
+                Console.WriteLine($"Release {chosen.Name}?");
+                if (Utilities.Confirm())
+                {
+                    Console.WriteLine($"\n{chosen.Name} has been released from the organization");
+                    for (int i = 0; i < list.Length; i++)
+                    {
+                        if (list[i] == chosen) list[i] = null;
+                        Coach.NewLines();
+                    }
+                }
+            }
+
         }
     }
 }

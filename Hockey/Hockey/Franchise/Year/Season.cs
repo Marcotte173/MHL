@@ -21,7 +21,7 @@ internal class Season
             List<Player> forward = new List<Player> { };
             List<Player> defence = new List<Player> { };
             for (int z = 0; z < 15; z++)
-            {
+            {  
                 if (Team.list[0].Roster[z].Position == "Forward") forward.Add(Team.list[0].Roster[z]);
                 else if (Team.list[0].Roster[z].Position == "Defence") defence.Add(Team.list[0].Roster[z]);
             }
@@ -87,9 +87,8 @@ internal class Season
             Console.WriteLine("[x]There are no events today");
             Console.WriteLine("[4]Coach actions");
             Console.WriteLine("[5]Gm actions");
-            Console.WriteLine("[6]Rosters");
-            Console.WriteLine("[7]Standings");
-            if (Statistics.leaderboardList.Count > 0) Console.WriteLine("[8]Leaderboard");
+            Console.WriteLine("[6]Standings");
+            if (Statistics.leaderboardList.Count > 0) Console.WriteLine("[7]Leaderboard");
             else Console.WriteLine("[x]No one has points yet");
             Console.WriteLine("\n\n[0]Next day");
             string choice = Utilities.Choice();
@@ -110,9 +109,8 @@ internal class Season
             }
             else if (choice == "4") Coach.Menu(); 
             else if (choice == "5") GM.Menu();
-            else if (choice == "6") Roster.Menu();
-            else if (choice == "7") Standings.Display();
-            else if (choice == "8") if (Statistics.leaderboardList.Count >0) Statistics.LeaderBoard();
+            else if (choice == "6") Standings.Display();
+            else if (choice == "7") if (Statistics.leaderboardList.Count >0) Statistics.LeaderBoard();
         }
         Console.Clear();
         Console.WriteLine("Cool Beans");
