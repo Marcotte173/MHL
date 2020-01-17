@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\AI\A!.cs" />
+    <Compile Include="Game\AI\AIDefence.cs" />
+    <Compile Include="Game\AI\AIOffence.cs" />
     <Compile Include="Base Classes\ComputerTeam.cs" />
     <Compile Include="Creation\Team Creation\ComputerTeams\AfternoonDelight.cs" />
     <Compile Include="Creation\Team Creation\ComputerTeams\BackyardWrestlers.cs" />
@@ -63,7 +66,7 @@
     <Compile Include="Franchise\Events\Check.cs" />
     <Compile Include="Franchise\Events\Event.cs" />
     <Compile Include="Franchise\Events\Interference.cs" />
-    <Compile Include="Franchise\Game\Game.cs" />
+    <Compile Include="Game\Game.cs" />
     <Compile Include="Franchise\Year\Playoffs.cs" />
     <Compile Include="Franchise\Year\Recap.cs" />
     <Compile Include="Franchise\Year\Season.cs" />
@@ -71,6 +74,13 @@
     <Compile Include="Franchise\Statistics\Roster.cs" />
     <Compile Include="Franchise\Statistics\Standings.cs" />
     <Compile Include="Franchise\Statistics\Statistics.cs" />
+    <Compile Include="Game\Locations\HighB.cs" />
+    <Compile Include="Game\Locations\HighA.cs" />
+    <Compile Include="Game\Locations\LowB.cs" />
+    <Compile Include="Game\Locations\LowA.cs" />
+    <Compile Include="Game\Locations\NeutralB.cs" />
+    <Compile Include="Game\Locations\NeutralA.cs" />
+    <Compile Include="Game\Locations\Rink.cs" />
     <Compile Include="Time\Day.cs" />
     <Compile Include="Time\Time.cs" />
     <Compile Include="Utilities\Credits.cs" />

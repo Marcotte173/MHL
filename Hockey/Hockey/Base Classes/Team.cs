@@ -3,6 +3,8 @@ using System.Collections.Generic;
 public class Team
 {
     public static List<Team> list = new List<Team> { new PlayerTeam(),  new AfternoonDelight(), new BackyardWrestlers(), new OttwellSeals(), new StocktonSlaps(), new TurkeySandwiches() };
+    protected Player[] currentFLine = new Player[3];
+    protected Player[] currentDLine = new Player[2];
     protected Player[] line1 = new  Player[3] ;
     protected Player[] line2 = new  Player[3] ;
     protected Player[] line3 = new  Player[3] ;
@@ -15,6 +17,8 @@ public class Team
     protected List<Player> injured = new List<Player> { };
     protected Player startingGoalie;
     protected Player backupGoalie;
+    public AIOffence o = new AIOffence();
+    public AIDefence d = new AIDefence();
 
     protected int win;
     protected int loss;
@@ -52,6 +56,8 @@ public class Team
     public int Forward { get { return forward; } set { forward = value; } }
     public int Defence { get { return defence; } set { defence = value; } }
     public int Goalie { get { return goalie; } set { goalie = value; } }
+    public Player[] CurrentFLine { get { return currentFLine; } set { currentFLine = value; } }
+    public Player[] CurrentDLine { get { return currentDLine; } set { currentDLine = value; } }
     public Player[] Line1 { get { return line1; } set { line1 = value; } }
     public Player[] Line2 { get { return line2; } set { line2 = value; } }
     public Player[] Line3 { get { return line3; } set { line3 = value; } }
