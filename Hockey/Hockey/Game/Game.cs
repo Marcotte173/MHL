@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public class Game
 {
+    internal static int momentum;
     internal static Team offence;
     internal static Team defence;
     internal static Rink location;
@@ -15,12 +16,12 @@ public class Game
     internal static Rink la = new LowA();
     internal static Rink ha = new HighA();
     internal static Rink na = new NeutralA();
-    internal static Player carrier;
-    internal static Player prev1;
-    internal static Player prev2;
+    internal static Player goalScorer;
+    internal static Player assist1;
+    internal static Player assist2;
     internal static Player dPlayer;
-    internal static AIOffence o = new AIOffence();
-    internal static AIDefence d = new AIDefence();
+    internal static AIOffence oAI = new AIOffence();
+    internal static AIDefence dAI = new AIDefence();
     internal static Game game = new Game();
 
     Team a;
@@ -66,15 +67,16 @@ public class Game
         int period = 1;
         int time = 0;
         ChangeFLines(a, a.Line1);
-        ChangeFLines(b, a.Line1);
-        ChangeFLines(a, a.DLine1);
-        ChangeFLines(b, a.DLine1);
+        ChangeFLines(b, b.Line1);
+        ChangeDLines(a, a.DLine1);
+        ChangeDLines(b, b.DLine1);
         Faceoff(true);
         while (period < 4)
         {
             while (time < 200)
             {
-                Result(o.Decision(location), d.Decision(location));
+                Result(oAI.Decision(location), dAI.Decision(location));
+                
                 time++;
             }            
             period++;
@@ -82,24 +84,27 @@ public class Game
         GameRecap();
     }
 
-    private static void Result(int[] o, int[] d)
+    private static void Result(int[] a, int[] b)
     {
-        if(o[1] >= d[1])
+        Console.Clear();
+        Console.WriteLine($"{goalScorer.Name} {a[1]} {a[0]}, {dPlayer.Name} {a[1]} {a[0]}");
+        if (a[1] >= b[1])
         {
-            if (o[0] == 1) location.WristShot();
-            if (o[0] == 2) location.OneTimer();
-            if (o[0] == 3) location.Slapshot();
-            if (o[0] == 4) location.Pass();
-            if (o[0] == 5) location.Carry();
+            if (a[0] == 1) location.WristShot(goalScorer, dPlayer.Team.Goalies[0]);
+            if (a[0] == 2) location.OneTimer(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
+            if (a[0] == 3) location.Slapshot(goalScorer, dPlayer.Team.Goalies[0]);
+            if (a[0] == 4) location.Pass(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
+            if (a[0] == 5) location.Carry(goalScorer);  
         }
         else
         {
-            if (d[0] == 1) location.BlockShot();
-            if (d[0] == 2) location.Check();
-            if (d[0] == 3) location.InterceptPass();
-            if (d[0] == 4) location.PokeCheck();
-            if (d[0] == 5) location.Positioning();
+            if (b[0] == 1) location.BlockShot();
+            if (b[0] == 2) location.Check();
+            if (b[0] == 3) location.InterceptPass();
+            if (b[0] == 4) location.PokeCheck();
+            if (b[0] == 5) location.Positioning();
         }
+        Console.ReadLine();
     }
 
     private static void ChangeFLines(Team x, Player[] line)
@@ -112,24 +117,27 @@ public class Game
         x.CurrentDLine = line;
     }
 
-    private static void Faceoff(bool center)
+    internal static void Faceoff(bool center)
     {
         int faceoffRoll = Utilities.RandomInt(1, 101);
         int awin = 50 + game.a.CurrentFLine[1].OffAware - game.b.CurrentFLine[1].OffAware;
         if (faceoffRoll <= awin)
         {
-            o = game.a.o;
-            d = game.a.d;
-            PuckChange(game.a);
-            carrier = game.a.CurrentFLine[1];            
+            offence =  game.a;
+            defence =  game.b;
+            oAI =  game.a.oAI;
+            dAI =  game.b.dAI;
+            goalScorer = game.a.CurrentFLine[1];
+            dPlayer =  game.b.CurrentDLine[1];
         }
         else
         {
-            o = game.b.o;
-            d = game.b.d;
-            PuckChange(game.b);
-            dPlayer = game.b.CurrentFLine[1];
-            if (location == la) location = ld;
+            offence = game.b ;
+            defence = game.a;
+            oAI = game.b.oAI ;
+            dAI = game.a.dAI;
+            goalScorer = game.b.CurrentFLine[1];
+            dPlayer = game.a.CurrentDLine[1];
         }
         if (center) location = nd;
     }
@@ -184,9 +192,13 @@ public class Game
         foreach (Player p in game.a.Roster) if (p != null) p.GamesPlayed++;
         foreach (Player p in game.b.Roster) if (p != null) p.GamesPlayed++;
     }
-    static void PuckChange(Team t)
+    internal static void PuckChange()
     {
-        offence = (game.a == t) ? game.a : game.b;
-        defence = (game.a == t) ? game.b : game.a;
+        offence = (offence == game.a) ? game.b : game.a;
+        defence = (defence == game.a) ? game.b : game.a;
+        oAI = (oAI == game.a.oAI) ? game.b.oAI : game.a.oAI;
+        dAI = (dAI == game.a.dAI) ? game.b.dAI : game.a.dAI;
+        goalScorer = (goalScorer == game.a.CurrentFLine[1])? game.b.CurrentFLine[1]: game.a.CurrentFLine[1];
+        dPlayer = (dPlayer == game.a.CurrentDLine[1]) ? game.b.CurrentDLine[1] : game.a.CurrentDLine[1];
     }
 }

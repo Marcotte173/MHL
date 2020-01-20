@@ -22,8 +22,8 @@ internal class Season
             List<Player> defence = new List<Player> { };
             for (int z = 0; z < 15; z++)
             {  
-                if (Team.list[0].Roster[z].Position == "Forward") forward.Add(Team.list[0].Roster[z]);
-                else if (Team.list[0].Roster[z].Position == "Defence") defence.Add(Team.list[0].Roster[z]);
+                if (Team.list[i].Roster[z].Position == "Forward") forward.Add(Team.list[i].Roster[z]);
+                else if (Team.list[i].Roster[z].Position == "Defence") defence.Add(Team.list[i].Roster[z]);
             }
             Utilities.SortOverall(forward);
             for (int j = 0; j < 3; j++)

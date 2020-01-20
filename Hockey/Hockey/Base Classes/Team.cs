@@ -17,8 +17,8 @@ public class Team
     protected List<Player> injured = new List<Player> { };
     protected Player startingGoalie;
     protected Player backupGoalie;
-    public AIOffence o = new AIOffence();
-    public AIDefence d = new AIDefence();
+    public AIOffence oAI = new AIOffence();
+    public AIDefence dAI = new AIDefence();
 
     protected int win;
     protected int loss;
