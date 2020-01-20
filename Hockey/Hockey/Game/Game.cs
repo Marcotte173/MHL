@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 public class Game
 {
-    static Team offence;
-    static Team defence;
-    static Rink location;
+    internal static Team offence;
+    internal static Team defence;
+    internal static Rink location;
     internal static Rink ld = new LowB();
     internal static Rink hd = new HighB();
     internal static Rink nd = new NeutralB();
@@ -16,12 +16,12 @@ public class Game
     internal static Rink ha = new HighA();
     internal static Rink na = new NeutralA();
     internal static Player carrier;
-    static Player prev1;
-    static Player prev2;
-    static Player dPlayer;
-    static AIOffence o = new AIOffence();
-    static AIDefence d = new AIDefence();
-    static Game game = new Game();
+    internal static Player prev1;
+    internal static Player prev2;
+    internal static Player dPlayer;
+    internal static AIOffence o = new AIOffence();
+    internal static AIDefence d = new AIDefence();
+    internal static Game game = new Game();
 
     Team a;
     Team b;
@@ -65,8 +65,10 @@ public class Game
         Team b = game.b;
         int period = 1;
         int time = 0;
-        ChangeLines(a, a.Line1);
-        ChangeLines(b, a.Line1);
+        ChangeFLines(a, a.Line1);
+        ChangeFLines(b, a.Line1);
+        ChangeFLines(a, a.DLine1);
+        ChangeFLines(b, a.DLine1);
         Faceoff(true);
         while (period < 4)
         {
@@ -100,15 +102,20 @@ public class Game
         }
     }
 
-    private static void ChangeLines(Team x, Player[] line)
+    private static void ChangeFLines(Team x, Player[] line)
     {
         x.CurrentFLine = line;
+    }
+
+    private static void ChangeDLines(Team x, Player[] line)
+    {
+        x.CurrentDLine = line;
     }
 
     private static void Faceoff(bool center)
     {
         int faceoffRoll = Utilities.RandomInt(1, 101);
-        int awin = 50 + offence.CurrentFLine[1].OffAware - defence.CurrentFLine[1].OffAware;
+        int awin = 50 + game.a.CurrentFLine[1].OffAware - game.b.CurrentFLine[1].OffAware;
         if (faceoffRoll <= awin)
         {
             o = game.a.o;
@@ -125,6 +132,11 @@ public class Game
             if (location == la) location = ld;
         }
         if (center) location = nd;
+    }
+
+    internal static void Warmup()
+    {
+        
     }
 
     private static void GameRecap()
