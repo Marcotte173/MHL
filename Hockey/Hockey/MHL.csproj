@@ -74,12 +74,9 @@
     <Compile Include="Franchise\Statistics\Roster.cs" />
     <Compile Include="Franchise\Statistics\Standings.cs" />
     <Compile Include="Franchise\Statistics\Statistics.cs" />
-    <Compile Include="Game\Locations\HighB.cs" />
-    <Compile Include="Game\Locations\HighA.cs" />
-    <Compile Include="Game\Locations\LowB.cs" />
-    <Compile Include="Game\Locations\LowA.cs" />
-    <Compile Include="Game\Locations\NeutralB.cs" />
-    <Compile Include="Game\Locations\NeutralA.cs" />
+    <Compile Include="Game\Locations\High.cs" />
+    <Compile Include="Game\Locations\Low.cs" />
+    <Compile Include="Game\Locations\Neutral.cs" />
     <Compile Include="Game\Locations\Rink.cs" />
     <Compile Include="Time\Day.cs" />
     <Compile Include="Time\Time.cs" />

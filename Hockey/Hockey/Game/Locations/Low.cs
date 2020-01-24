@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class NeutralB : Rink
+public class Low:Rink
 {
-    public NeutralB()
+    public Low()
     : base()
     {
 

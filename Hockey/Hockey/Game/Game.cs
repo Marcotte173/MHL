@@ -10,12 +10,9 @@ public class Game
     internal static Team offence;
     internal static Team defence;
     internal static Rink location;
-    internal static Rink ld = new LowB();
-    internal static Rink hd = new HighB();
-    internal static Rink nd = new NeutralB();
-    internal static Rink la = new LowA();
-    internal static Rink ha = new HighA();
-    internal static Rink na = new NeutralA();
+    internal static Rink low = new Low();
+    internal static Rink high = new High();
+    internal static Rink neutral = new Neutral();
     internal static Player goalScorer;
     internal static Player assist1;
     internal static Player assist2;
@@ -75,8 +72,7 @@ public class Game
         {
             while (time < 200)
             {
-                Result(oAI.Decision(location), dAI.Decision(location));
-                
+                Result(oAI.Decision(location,offence), dAI.Decision(location,defence));                
                 time++;
             }            
             period++;
@@ -139,7 +135,12 @@ public class Game
             goalScorer = game.b.CurrentFLine[1];
             dPlayer = game.a.CurrentDLine[1];
         }
-        if (center) location = nd;
+        if (center)
+        {
+            location = neutral;
+            offence.attack = false;
+        } 
+            
     }
 
     internal static void Warmup()

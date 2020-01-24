@@ -12,7 +12,7 @@ public class AIDefence : AI
         line = new Player[2];
     }
 
-    internal int[] Decision(Rink location)
+    internal int[] Decision(Rink location, Team t)
     {
         int[] x = new int[2];
         Game.dPlayer = Game.defence.CurrentDLine[0];
@@ -27,7 +27,7 @@ public class AIDefence : AI
                 if (p.DefAware > Game.dPlayer.DefAware) Game.dPlayer = p;
         }
         Player d = Game.dPlayer;
-        if (location == Game.la)
+        if (location == Game.low && t.attack)
         {
             int choice = Utilities.RandomInt(1, 8);
             //PokeCheck
@@ -39,7 +39,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware }; 
         }
-        if (location == Game.ha)
+        if (location == Game.high && t.attack)
         {
             int choice = Utilities.RandomInt(1, 8);
             //PokeCheck
@@ -51,7 +51,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware };
         }
-        if (location == Game.na)
+        if (location == Game.neutral && t.attack)
         {
             int choice = Utilities.RandomInt(1, 9);
             //PokeCheck
@@ -63,7 +63,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware };
         }
-        if (location == Game.nd)
+        if (location == Game.neutral && t.attack == false)
         {
             int choice = Utilities.RandomInt(1, 9);
             //PokeCheck
@@ -75,7 +75,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware };
         }
-        if (location == Game.hd)
+        if (location == Game.high && t.attack == false)
         {
             int choice = Utilities.RandomInt(1, 10);
             //PokeCheck
@@ -89,7 +89,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware };
         }
-        if (location == Game.ld)
+        if (location == Game.low && t.attack == false)
         {
             int choice = Utilities.RandomInt(1, 10);
             //PokeCheck

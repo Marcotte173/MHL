@@ -11,12 +11,12 @@ public class AIOffence:AI
         line = new Player[3];
     }
 
-    internal int[] Decision(Rink location)
+    internal int[] Decision(Rink location, Team t)
     {
-        Player o = Game.carrier; 
+        Player o = Game.goalScorer; 
         int[] x = new int[2];
-        int y = Utilities.RandomInt(0, 12);
-        if (location == Game.la)
+        int y = Utilities.RandomInt(0, 12);        
+        if (location == Game.low && t.attack)
         {
             int choice = Utilities.RandomInt(1, 8);
             //carry
@@ -28,7 +28,7 @@ public class AIOffence:AI
             //pass
             else x = new int[] { 4, o.Passing + y };
         }
-        if (location == Game.ha)
+        if (location == Game.high && t.attack)
         {
             if (o.Position == "Forward")
             {
@@ -47,7 +47,7 @@ public class AIOffence:AI
                 else x = new int[] { 4, o.Passing + y };
             }
         }
-        if (location == Game.na)
+        if (location == Game.neutral && t.attack)
         {
             int choice = Utilities.RandomInt(1, 8);
             //carry
@@ -57,7 +57,7 @@ public class AIOffence:AI
             //slapshot
             else x = new int[] { 4, o.Passing + y };
         }
-        if (location == Game.nd)
+        if (location == Game.neutral && t.attack == false)
         {
             int choice = Utilities.RandomInt(1, 6);
             //carry
@@ -65,7 +65,7 @@ public class AIOffence:AI
             //pass
             else x = new int[] { 4, o.Passing + y };
         }
-        if (location == Game.hd)
+        if (location == Game.high && t.attack == false)
         {
             int choice = Utilities.RandomInt(1, 6);
             //carry
@@ -73,7 +73,7 @@ public class AIOffence:AI
             //pass
             else x = new int[] { 4, o.Passing + y };
         }
-        if (location == Game.ld)
+        if (location == Game.low && t.attack == false)
         {
             int choice = Utilities.RandomInt(1, 6);
             //carry

@@ -39,7 +39,7 @@ public class Rink
         {
             Console.WriteLine($"BIG SAVE!\n{goalie.Name} comes up with a big save to keep his team out of trouble");
             Thread.Sleep(300);
-            Game.Faceoff(false);
+            Game.Faceoff(false);  
         }
     }
 

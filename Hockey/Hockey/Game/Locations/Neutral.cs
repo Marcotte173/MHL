@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class HighA : Rink
+public class Neutral : Rink
 {
-    public HighA()
+    public Neutral()
     : base()
     {
 
