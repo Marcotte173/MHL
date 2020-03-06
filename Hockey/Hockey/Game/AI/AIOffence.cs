@@ -18,14 +18,15 @@ public class AIOffence:AI
         if (location == Game.low && opponentZone)
         {
             int choice = Utilities.RandomInt(1, 8);
-            //carry
-            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5 };
             //wristshot
-            if (choice == 3 || choice == 4) x = new int[] { 1, o.Shooting};
-            //onetimer
-            if (choice == 5 ) x = new int[] { 2, (o.Passing + o.OffAware*2) / 3  };
+            if (choice == 1 || choice == 2)             x = new int[] { 1, o.Shooting };
+            //onetimer                                 
+            if (choice == 3)                            x = new int[] { 3, (o.Passing + o.OffAware * 2) / 3 };
+            //carry                                    
+            if (choice == 4 || choice == 5)             x = new int[] { 4, (o.Speed * 3 + o.Handling * 2) / 5 };
             //pass
-            else x = new int[] { 4, o.Passing };
+            else                                        x = new int[] { 5, o.Passing };
+
         }
         if (location == Game.high && opponentZone)
         {
@@ -33,26 +34,28 @@ public class AIOffence:AI
             {
                 int choice = Utilities.RandomInt(1, 6);
                 //carry
-                if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed*3 + o.Handling*2)/5 };
+                if (choice == 1 || choice == 2)         x = new int[] { 4, (o.Speed*3 + o.Handling*2)/5 };
                 //pass
-                else x = new int[] { 4, o.Passing };
+                else                                    x = new int[] { 5, o.Passing };
             }
             if (o.Position == "Defence")
             {
                 int choice = Utilities.RandomInt(1, 6);
                 //wristshot
-                if (choice == 1 || choice == 2) x = new int[] { 3, o.Shooting };
+                if (choice == 1 || choice == 2)         x = new int[] { 1, o.Shooting };
                 //slapshot
-                else x = new int[] { 4, o.Passing };
+                else  if (choice == 3 || choice ==4)    x = new int[] { 2, o.Shooting };
+                //pass
+                else                                    x = new int[] { 5, o.Passing };
             }
         }
         else
         {
             int choice = Utilities.RandomInt(1, 6);
             //carry
-            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5  };
-            //pass
-            else x = new int[] { 4, o.Passing };
+            if (choice == 1 || choice == 2)             x = new int[] { 4, (o.Speed * 3 + o.Handling * 2) / 5  };
+            //pass 
+            else                                        x = new int[] { 5, o.Passing };
         }
         return x;
     }

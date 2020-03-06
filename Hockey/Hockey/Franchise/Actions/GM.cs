@@ -53,7 +53,6 @@ public class GM
 
     private static void Trade(Team t)
     {
-        Console.Clear();
-         
+        Console.Clear();         
     }
 }

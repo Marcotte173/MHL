@@ -20,8 +20,9 @@ public class Rink
         Player shooter = line[num];
         Game.assist1 = Game.goalScorer;
         Game.goalScorer = shooter;
-        Console.WriteLine($"{Game.assist1.Name} passes the puck to {Game.goalScorer.Name}\n He shoots!");
-        shooter.Team.Shots++;        
+        Console.WriteLine($"{Game.assist1.Name} passes the puck to {Game.goalScorer.Name}\n He shoots!\n");
+        shooter.Team.Shots++;
+        Thread.Sleep(300);
         if ((shooter.Shooting + shooter.OffAware) / 2 + Utilities.RandomInt(0, 15) > goalie.Agility + Utilities.RandomInt(0, 18))
         {
             Console.WriteLine($"HE SCORES!\n{shooter.Name} puts one past the goalie!");
@@ -35,6 +36,9 @@ public class Rink
             Thread.Sleep(300);
             Game.Faceoff(false);  
         }
+        Console.WriteLine("\n");
+        Game.momentum = 0;
+        Utilities.KeyPress();
     }
 
     public virtual void WristShot(Player shooter, Player goalie)

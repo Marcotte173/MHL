@@ -84,25 +84,70 @@ public class Game
 
     private static void Result(int[] a, int[] b)
     {
-        Console.Clear();
-        low.OneTimer(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
-        //if (a[1] >= b[1])
-        //{
-        //    if (a[0] == 1) location.WristShot(goalScorer, dPlayer.Team.Goalies[0]);
-        //    if (a[0] == 2) location.OneTimer(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
-        //    if (a[0] == 3) location.Slapshot(goalScorer, dPlayer.Team.Goalies[0]);
-        //    if (a[0] == 4) location.Pass(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
-        //    if (a[0] == 5) location.Carry(goalScorer);  
-        //}
-        //else
-        //{
-        //    if (b[0] == 1) location.BlockShot();
-        //    if (b[0] == 2) location.Check();
-        //    if (b[0] == 3) location.InterceptPass();
-        //    if (b[0] == 4) location.PokeCheck();
-        //    if (b[0] == 5) location.Positioning();
-        //}
-        Console.ReadLine();
+        //Does Offence get to do their thing or defence?
+        bool offence = false;
+        //Percentage chance to see who exerts will
+        int roll = Utilities.RandomInt(1, 101);
+        //Modifiers based on what each side selected
+        if (a[0] == 1 || a[0] == 2)
+        {
+            if (b[0] == 1) b[1] += 5;
+            else if (b[0] == 2) b[1] -= 2;
+            else if (b[0] == 3) b[1] -= 30;
+        }
+        else if (a[0] == 3)
+        {
+            if (b[0] == 1) b[1] -= 30;
+            else if (b[0] == 2) b[1] -= 2;
+            else if (b[0] == 3) b[1] += 5;
+            else if (b[0] == 4) b[1] += 2;
+        }
+        else if (a[0] == 4)
+        {
+            if (b[0] == 1) b[1] -= 30;
+            else if (b[0] == 2) b[1] -= 4;
+            else if (b[0] == 3) b[1] -= 10;
+            else if (b[0] == 4) b[1] += 4;
+            else if (b[0] == 5) b[1] += 8;
+        }
+        else 
+        {
+            if (b[0] == 1) b[1] -= 10;
+            else if (b[0] == 2) b[1] -= 2;
+            else if (b[0] == 3) b[1] += 10;
+            else if (b[0] == 4) b[1] += 4;
+        }
+        roll -= a[1];
+        roll += b[1];
+        roll += momentum;
+        //Roll, decide who's succesful
+        if (roll <= 50)
+        {
+            offence = true;
+            if (roll < 20) momentum -= 3;
+        }
+        else
+        {
+            offence = true;
+            if (roll > 80) momentum += 3;
+        }
+        //What does that mean?
+        if (offence)
+        {
+            if (a[0] == 1) location.WristShot(goalScorer, dPlayer.Team.Goalies[0]);
+            if (a[0] == 2) location.Slapshot(goalScorer, dPlayer.Team.Goalies[0]);
+            if (a[0] == 3) location.OneTimer(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
+            if (a[0] == 4) location.Carry(goalScorer);  
+            if (a[0] == 5) location.Pass(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
+        }
+        else
+        {
+            if (b[0] == 1) location.BlockShot();
+            if (b[0] == 2) location.Check();
+            if (b[0] == 3) location.InterceptPass();
+            if (b[0] == 4) location.PokeCheck();
+            if (b[0] == 5) location.Positioning();
+        }        
     }
 
     private static void ChangeFLines(Team x, Player[] line)
