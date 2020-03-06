@@ -32,7 +32,7 @@ namespace Hockey
             Write.Menu(Colour.INJURY +"  _| |_\\/_| |_ "+Colour.POSITION + " _| |  | |_ "+Colour.GOAL + " _| |__/ | " + Colour.RESET + "");
             Write.Menu(Colour.INJURY + "|_____||_____|"  +Colour.POSITION + "|____||____|"+  Colour.GOAL + "|________|" + Colour.RESET + "");
             Console.SetCursorPosition(0, Console.WindowHeight / 2 + 5);
-            Write.CenterText("Version 0.10");
+            Write.CenterText("Version 0.12 March 6 2020");
             Console.SetCursorPosition(0, Console.WindowHeight / 2 + 10);
             Write.CenterText("[N]ew Game\t[Q]uit\n");
             string choice = Utilities.Choice();
