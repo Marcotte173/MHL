@@ -19,7 +19,6 @@ public class Team
     protected Player backupGoalie;
     public AIOffence oAI = new AIOffence();
     public AIDefence dAI = new AIDefence();
-    public bool attack;
 
     protected int win;
     protected int loss;

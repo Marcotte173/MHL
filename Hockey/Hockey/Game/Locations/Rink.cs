@@ -12,27 +12,21 @@ public class Rink
     }
     public virtual void OneTimer(Player[] line, Player goalie)
     {
-        for (int i = 0; i < line.Length; i++)
+        int num = Utilities.RandomInt(0, 3);
+        while (Game.goalScorer == line[num])
         {
-            if (Game.goalScorer == line[i]) line[i] = null;
+            num = Utilities.RandomInt(0, 3);
         }
-        Player shooter = null;
-        while (shooter == null)
-        {
-            if (line[Utilities.RandomInt(0, 3)] != null) shooter = line[Utilities.RandomInt(0, 3)];
-
-        }
-        if (Game.assist1 != null) Game.assist2 = Game.assist1;
+        Player shooter = line[num];
         Game.assist1 = Game.goalScorer;
         Game.goalScorer = shooter;
-        Console.WriteLine($"{Game.assist1} passes the puck to {Game.goalScorer}\n He shoots!");
+        Console.WriteLine($"{Game.assist1.Name} passes the puck to {Game.goalScorer.Name}\n He shoots!");
         shooter.Team.Shots++;        
         if ((shooter.Shooting + shooter.OffAware) / 2 + Utilities.RandomInt(0, 15) > goalie.Agility + Utilities.RandomInt(0, 18))
         {
             Console.WriteLine($"HE SCORES!\n{shooter.Name} puts one past the goalie!");
             shooter.GoalStat++;
-            if (Game.assist1 != null) Game.assist1.AssistStat++;
-            if (Game.assist2 != null) Game.assist2.AssistStat++;
+            Game.assist1.AssistStat++;
             shooter.Team.Score++;
         }
         else

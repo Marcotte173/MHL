@@ -11,75 +11,48 @@ public class AIOffence:AI
         line = new Player[3];
     }
 
-    internal int[] Decision(Rink location, Team t)
+    internal int[] Decision(bool opponentZone, Rink location)
     {
         Player o = Game.goalScorer; 
-        int[] x = new int[2];
-        int y = Utilities.RandomInt(0, 12);        
-        if (location == Game.low && t.attack)
+        int[] x = new int[2];      
+        if (location == Game.low && opponentZone)
         {
             int choice = Utilities.RandomInt(1, 8);
             //carry
-            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5 + y};
+            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5 };
             //wristshot
-            if (choice == 3 || choice == 4) x = new int[] { 1, o.Shooting  + y};
+            if (choice == 3 || choice == 4) x = new int[] { 1, o.Shooting};
             //onetimer
-            if (choice == 5 ) x = new int[] { 2, (o.Passing + o.OffAware*2) / 3 + y };
+            if (choice == 5 ) x = new int[] { 2, (o.Passing + o.OffAware*2) / 3  };
             //pass
-            else x = new int[] { 4, o.Passing + y };
+            else x = new int[] { 4, o.Passing };
         }
-        if (location == Game.high && t.attack)
+        if (location == Game.high && opponentZone)
         {
             if (o.Position == "Forward")
             {
                 int choice = Utilities.RandomInt(1, 6);
                 //carry
-                if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed*3 + o.Handling*2)/5 + y };
+                if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed*3 + o.Handling*2)/5 };
                 //pass
-                else x = new int[] { 4, o.Passing + y };
+                else x = new int[] { 4, o.Passing };
             }
             if (o.Position == "Defence")
             {
                 int choice = Utilities.RandomInt(1, 6);
                 //wristshot
-                if (choice == 1 || choice == 2) x = new int[] { 3, o.Shooting + y };
+                if (choice == 1 || choice == 2) x = new int[] { 3, o.Shooting };
                 //slapshot
-                else x = new int[] { 4, o.Passing + y };
+                else x = new int[] { 4, o.Passing };
             }
         }
-        if (location == Game.neutral && t.attack)
-        {
-            int choice = Utilities.RandomInt(1, 8);
-            //carry
-            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5 + y };
-            //pass
-            else if (choice == 3 || choice == 4 ) x = new int[] { 4, o.Passing + y };
-            //slapshot
-            else x = new int[] { 4, o.Passing + y };
-        }
-        if (location == Game.neutral && t.attack == false)
+        else
         {
             int choice = Utilities.RandomInt(1, 6);
             //carry
-            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5 + y };
+            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5  };
             //pass
-            else x = new int[] { 4, o.Passing + y };
-        }
-        if (location == Game.high && t.attack == false)
-        {
-            int choice = Utilities.RandomInt(1, 6);
-            //carry
-            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5 + y };
-            //pass
-            else x = new int[] { 4, o.Passing + y };
-        }
-        if (location == Game.low && t.attack == false)
-        {
-            int choice = Utilities.RandomInt(1, 6);
-            //carry
-            if (choice == 1 || choice == 2) x = new int[] { 5, (o.Speed * 3 + o.Handling * 2) / 5 + y };
-            //pass
-            else x = new int[] { 4, o.Passing + y };
+            else x = new int[] { 4, o.Passing };
         }
         return x;
     }

@@ -12,7 +12,7 @@ public class AIDefence : AI
         line = new Player[2];
     }
 
-    internal int[] Decision(Rink location, Team t)
+    internal int[] Decision(bool opponentZone, Rink location)
     {
         int[] x = new int[2];
         Game.dPlayer = Game.defence.CurrentDLine[0];
@@ -27,7 +27,7 @@ public class AIDefence : AI
                 if (p.DefAware > Game.dPlayer.DefAware) Game.dPlayer = p;
         }
         Player d = Game.dPlayer;
-        if (location == Game.low && t.attack)
+        if (opponentZone)
         {
             int choice = Utilities.RandomInt(1, 8);
             //PokeCheck
@@ -39,19 +39,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware }; 
         }
-        if (location == Game.high && t.attack)
-        {
-            int choice = Utilities.RandomInt(1, 8);
-            //PokeCheck
-            if (choice == 1 || choice == 2) x = new int[] { 4, d.DefAware };
-            //Check
-            if (choice == 3 || choice == 4) x = new int[] { 2, (d.DefAware + d.Checking) / 2 };
-            //InterceptPass
-            if (choice == 5) x = new int[] { 3, d.DefAware };
-            //Positioning
-            else x = new int[] { 5, d.DefAware };
-        }
-        if (location == Game.neutral && t.attack)
+        if (location == Game.neutral && opponentZone == false)
         {
             int choice = Utilities.RandomInt(1, 9);
             //PokeCheck
@@ -63,19 +51,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware };
         }
-        if (location == Game.neutral && t.attack == false)
-        {
-            int choice = Utilities.RandomInt(1, 9);
-            //PokeCheck
-            if (choice == 1 || choice == 2) x = new int[] { 4, d.DefAware };
-            //Check
-            if (choice == 3 || choice == 4 || choice == 5) x = new int[] { 2, (d.DefAware + d.Checking) / 2 };
-            //InterceptPass
-            if (choice == 6) x = new int[] { 3, d.DefAware };
-            //Positioning
-            else x = new int[] { 5, d.DefAware };
-        }
-        if (location == Game.high && t.attack == false)
+        if (location == Game.high && opponentZone == false)
         {
             int choice = Utilities.RandomInt(1, 10);
             //PokeCheck
@@ -89,7 +65,7 @@ public class AIDefence : AI
             //Positioning
             else x = new int[] { 5, d.DefAware };
         }
-        if (location == Game.low && t.attack == false)
+        if (location == Game.low && opponentZone == false)
         {
             int choice = Utilities.RandomInt(1, 10);
             //PokeCheck

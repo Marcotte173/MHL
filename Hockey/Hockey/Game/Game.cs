@@ -9,6 +9,7 @@ public class Game
     internal static int momentum;
     internal static Team offence;
     internal static Team defence;
+    internal static bool sideA;
     internal static Rink location;
     internal static Rink low = new Low();
     internal static Rink high = new High();
@@ -72,7 +73,8 @@ public class Game
         {
             while (time < 200)
             {
-                Result(oAI.Decision(location,offence), dAI.Decision(location,defence));                
+                if ((a.oAI == oAI && sideA) || (b.oAI == oAI && sideA == false)) Result(oAI.Decision(true, location), dAI.Decision(false, location));
+                else Result(oAI.Decision(false, location), dAI.Decision(true, location));
                 time++;
             }            
             period++;
@@ -83,23 +85,23 @@ public class Game
     private static void Result(int[] a, int[] b)
     {
         Console.Clear();
-        Console.WriteLine($"{goalScorer.Name} {a[1]} {a[0]}, {dPlayer.Name} {a[1]} {a[0]}");
-        if (a[1] >= b[1])
-        {
-            if (a[0] == 1) location.WristShot(goalScorer, dPlayer.Team.Goalies[0]);
-            if (a[0] == 2) location.OneTimer(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
-            if (a[0] == 3) location.Slapshot(goalScorer, dPlayer.Team.Goalies[0]);
-            if (a[0] == 4) location.Pass(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
-            if (a[0] == 5) location.Carry(goalScorer);  
-        }
-        else
-        {
-            if (b[0] == 1) location.BlockShot();
-            if (b[0] == 2) location.Check();
-            if (b[0] == 3) location.InterceptPass();
-            if (b[0] == 4) location.PokeCheck();
-            if (b[0] == 5) location.Positioning();
-        }
+        low.OneTimer(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
+        //if (a[1] >= b[1])
+        //{
+        //    if (a[0] == 1) location.WristShot(goalScorer, dPlayer.Team.Goalies[0]);
+        //    if (a[0] == 2) location.OneTimer(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
+        //    if (a[0] == 3) location.Slapshot(goalScorer, dPlayer.Team.Goalies[0]);
+        //    if (a[0] == 4) location.Pass(goalScorer.Team.CurrentFLine, dPlayer.Team.Goalies[0]);
+        //    if (a[0] == 5) location.Carry(goalScorer);  
+        //}
+        //else
+        //{
+        //    if (b[0] == 1) location.BlockShot();
+        //    if (b[0] == 2) location.Check();
+        //    if (b[0] == 3) location.InterceptPass();
+        //    if (b[0] == 4) location.PokeCheck();
+        //    if (b[0] == 5) location.Positioning();
+        //}
         Console.ReadLine();
     }
 
@@ -119,26 +121,21 @@ public class Game
         int awin = 50 + game.a.CurrentFLine[1].OffAware - game.b.CurrentFLine[1].OffAware;
         if (faceoffRoll <= awin)
         {
-            offence =  game.a;
-            defence =  game.b;
-            oAI =  game.a.oAI;
-            dAI =  game.b.dAI;
+            AHasPuck();
             goalScorer = game.a.CurrentFLine[1];
-            dPlayer =  game.b.CurrentDLine[1];
+            dPlayer = game.b.CurrentDLine[1];
+            sideA = false;
         }
         else
         {
-            offence = game.b ;
-            defence = game.a;
-            oAI = game.b.oAI ;
-            dAI = game.a.dAI;
+            BHasPuck();
+            sideA = true;
             goalScorer = game.b.CurrentFLine[1];
             dPlayer = game.a.CurrentDLine[1];
         }
         if (center)
         {
             location = neutral;
-            offence.attack = false;
         } 
             
     }
@@ -146,6 +143,22 @@ public class Game
     internal static void Warmup()
     {
         
+    }
+
+    public static void AHasPuck()
+    {
+        offence = game.a;
+        defence = game.b;
+        oAI = game.a.oAI;
+        dAI = game.b.dAI;         
+    }
+
+    public static void BHasPuck()
+    {
+        offence = game.b;
+        defence = game.a;
+        oAI = game.b.oAI;
+        dAI = game.a.dAI;        
     }
 
     private static void GameRecap()
