@@ -34,7 +34,7 @@ public class PlayerTeam:Team
         if (chosen != null) Player.ExaminePlayer(chosen);
     }
 
-    private void Available(List<Player> f, List<Player> d, List<Player> g, Player chosen)
+    public void Available(List<Player> f, List<Player> d, List<Player> g, Player chosen)
     {
         Console.Clear();
         Console.WriteLine("Who would you like to take a look at?\n\n[1]Forwards\n[2]Defence\n[3]Goalies\n");

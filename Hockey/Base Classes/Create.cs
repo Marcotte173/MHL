@@ -25,7 +25,7 @@ public class Create
         Loaner();
     }  
 
-    private static void Goalies()
+    public static void Goalies()
     {
         for (int i = 0; i < 15; i++) goalieList.Add(new Goalie(70, 99, 80, 10));
     }
@@ -41,7 +41,7 @@ public class Create
         for (int i = 0; i < defence; i++) defenceList.Add(new Defence(80, 99, 94, 3));
     }
 
-    private static void Elite()
+    public static void Elite()
     {
         //How many elite players?
         int total = rand.Next(15 , 20);
@@ -52,7 +52,7 @@ public class Create
         for (int i = 0; i < defence; i++) { defenceList.Add(new Defence(75, 93, 89, 3)); }
     }
 
-    private static void Top()
+    public static void Top()
     {
         //How many top players?
         int total = rand.Next(27, 34);
@@ -63,7 +63,7 @@ public class Create
         for (int i = 0; i < defence; i++) { defenceList.Add(new Defence(75, 89, 86, 5)); }
     }
 
-    private static void Bottom()
+    public static void Bottom()
     {
         //How many bottom players?
         int total = 100 - (defenceList.Count + forwardList.Count);
@@ -74,7 +74,7 @@ public class Create
         for (int i = 0; i < defence; i++) { defenceList.Add(new Defence(70, 83, 75, 6)); }
     }
 
-    private static void Loaner()
+    public static void Loaner()
     {        
         for (int i = 0; i < 50; i++) { loanerForwardList.Add(new Forward(30, 40, 35, 5)); }
         for (int i = 0; i < 50; i++) { loanerDefenceList.Add(new Defence(30, 40, 35, 5)); }

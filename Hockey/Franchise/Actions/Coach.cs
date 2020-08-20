@@ -26,7 +26,7 @@ public class Coach
         }        
     }
 
-    private static void ExamineOrSwap(int x)
+    public static void ExamineOrSwap(int x)
     {
         Player chosen = null;
         chosen = (x > 0 && x < 21) ? Roster.list[x] : null;
@@ -40,7 +40,7 @@ public class Coach
         Menu();
     }
 
-    private static void Swap(int x, Player chosen)
+    public static void Swap(int x, Player chosen)
     {
         int y;
         Display();
@@ -97,7 +97,7 @@ public class Coach
 
     }
 
-    private static void Examine(int x, Player chosen)
+    public static void Examine(int x, Player chosen)
     {
         Display();
         Name(Roster.list[x], 80, 20);
@@ -165,7 +165,7 @@ public class Coach
         Console.Write(Colour.OVERALL + "Overall" + Colour.RESET);
     }
 
-    private static void Display()
+    public static void Display()
     {
         Console.Clear();
         Write.CenterColourText(Colour.NAME, Colour.TEAM, "", Team.list[0].GMName, " of the ", Team.list[0].Name, "");

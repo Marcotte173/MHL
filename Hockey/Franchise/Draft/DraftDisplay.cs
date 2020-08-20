@@ -14,7 +14,7 @@ public class DraftDisplay
         else return PlayerList(list);        
     }
 
-    private static Player GoalieList(List<Player> list)
+    public static Player GoalieList(List<Player> list)
     {
         Console.WriteLine(String.Format("{0, -6}{1, -35}{2,-20}{3,-20}{4,-20}{5,-21}{6,-19}{7,-21}{8,-20}{9,-20}", "Num", Colour.NAME + "Name ", Colour.OVERALL + "Overall", Colour.PRICE + "Price", Colour.SHOOT + "Glove", Colour.PASS + "Stick", Colour.SPEED + "Angles", Colour.SECONDARY + "Agility", Colour.SECONDARY + "Butterfly", Colour.POSITION + "Position" + Colour.RESET));
         Console.WriteLine("");
@@ -32,7 +32,7 @@ public class DraftDisplay
         else return null;
     }
 
-    private static Player PlayerList(List<Player> list)
+    public static Player PlayerList(List<Player> list)
     {
         int iteration = 0;
         int counter = list.Count;

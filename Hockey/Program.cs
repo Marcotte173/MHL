@@ -22,15 +22,15 @@ namespace Hockey
             StartScreen();        
         }
 
-        private static void StartScreen()
+        public static void StartScreen()
         {
-            Console.SetCursorPosition(0, Console.WindowHeight / 2 - 3);
-            Write.Menu(Colour.INJURY +"  ____    ____  "+Colour.POSITION + "____  ____  "+Colour.GOAL + "_____      " + Colour.RESET + "");
-            Write.Menu(Colour.INJURY +" |_   \\  /   _|"+Colour.POSITION + "|_   ||   _|"+Colour.GOAL + "|_   _|    " + Colour.RESET + "");
-            Write.Menu(Colour.INJURY +"   |   \\/   |  "+Colour.POSITION + "  | |__| |  "+Colour.GOAL + "  | |      " + Colour.RESET + "");
-            Write.Menu(Colour.INJURY +"   | |\\  /| |  "+Colour.POSITION + "  |  __  |  "+Colour.GOAL + "  | |   _  " + Colour.RESET + "");
-            Write.Menu(Colour.INJURY +"  _| |_\\/_| |_ "+Colour.POSITION + " _| |  | |_ "+Colour.GOAL + " _| |__/ | " + Colour.RESET + "");
-            Write.Menu(Colour.INJURY + "|_____||_____|"  +Colour.POSITION + "|____||____|"+  Colour.GOAL + "|________|" + Colour.RESET + "");
+            Console.Clear();
+            Write.Line(43,8, Colour.INJURY +"  ____    ____  "+Colour.POSITION + "____  ____  "+Colour.GOAL + "_____      " + Colour.RESET + "");
+            Write.Line(43,9,Colour.INJURY +" |_   \\  /   _|"+Colour.POSITION + "|_   ||   _|"+Colour.GOAL + "|_   _|    " + Colour.RESET + "");
+            Write.Line(43,10,Colour.INJURY +"   |   \\/   |  "+Colour.POSITION + "  | |__| |  "+Colour.GOAL + "  | |      " + Colour.RESET + "");
+            Write.Line(43,11,Colour.INJURY +"   | |\\  /| |  "+Colour.POSITION + "  |  __  |  "+Colour.GOAL + "  | |   _  " + Colour.RESET + "");
+            Write.Line(43,12,Colour.INJURY +"  _| |_\\/_| |_ "+Colour.POSITION + " _| |  | |_ "+Colour.GOAL + " _| |__/ | " + Colour.RESET + "");
+            Write.Line(43,13, Colour.INJURY + "|_____||_____|"  +Colour.POSITION + "|____||____|"+  Colour.GOAL + "|________|" + Colour.RESET + "");
             Console.SetCursorPosition(0, Console.WindowHeight / 2 + 5);
             Write.CenterText("Version 0.10");
             Console.SetCursorPosition(0, Console.WindowHeight / 2 + 10);
@@ -41,14 +41,14 @@ namespace Hockey
             else StartScreen();
         }
 
-        private static void Game()
+        public static void Game()
         {
             Flavor();
             CreateTeam.Start();
             Draft.Start();    
         }       
 
-        private static void Flavor()
+        public static void Flavor()
         {
             Console.Clear();
             Console.WriteLine("You just received a call from your uncle.\n\nApparently, he won a small defunct hockey team in a poker game");

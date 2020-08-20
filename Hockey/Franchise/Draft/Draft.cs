@@ -58,7 +58,7 @@ internal class Draft
         Review();
     }
 
-    private static void Review()
+    public static void Review()
     {
         foreach (Team t in Team.list)
         {

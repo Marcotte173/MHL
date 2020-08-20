@@ -18,7 +18,7 @@ internal class CreateTeam
         Team.list[0].Name = (location == "" && name == "")?"The Edmonton Puppins":$"The {location} {name}";
     }
 
-    private static void GMName()
+    public static void GMName()
     {
         Console.Clear();
         Console.WriteLine("The clerk looks up at you\n");
@@ -29,7 +29,7 @@ internal class CreateTeam
         if (Utilities.Confirm() == false) { GMName(); }        
     }
 
-    private static string Location()
+    public static string Location()
     {
         Console.Clear();
         Console.WriteLine(Colour.SPEAK + "'Alright sir, at what location would you like to register your team?'\n" + Colour.TEAM);
@@ -39,7 +39,7 @@ internal class CreateTeam
         return location;
     }
 
-    private static string TeamName(string location)
+    public static string TeamName(string location)
     {
         Console.Clear();
         Console.WriteLine(Colour.SPEAK + "'Wonderful. And what would you like your team name to be?'\n" + Colour.TEAM);

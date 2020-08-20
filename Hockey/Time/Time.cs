@@ -44,7 +44,7 @@ public class Time
 
     internal static void Display()
     {
-        Write.EmbedColourText(Colour.PASS, Colour.PASS, Colour.PASS, Colour.PASS, "It is ", $"{Time.days[Time.day]}", ", the ", $"{Time.weeks[Time.week]}", " week of ", $"{Time.months[Time.month]}", ", ", $"{Time.year}", "\n\n");
+        Write.Line(Colour.PASS, Colour.PASS, Colour.PASS, Colour.PASS, "It is ", $"{Time.days[Time.day]}", ", the ", $"{Time.weeks[Time.week]}", " week of ", $"{Time.months[Time.month]}", ", ", $"{Time.year}", "\n\n");
     }
 
     static public int Day { get { return day; } set { day = value; } }

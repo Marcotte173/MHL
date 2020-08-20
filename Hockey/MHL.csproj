@@ -59,7 +59,7 @@
     <Compile Include="Franchise\Draft\Aquire.cs" />
     <Compile Include="Franchise\Draft\Draft.cs" />
     <Compile Include="Franchise\Draft\DraftDisplay.cs" />
-    <Compile Include="Franchise\Actions\Actions.cs" />
+    <Compile Include="Game\Actions.cs" />
     <Compile Include="Franchise\Events\Check.cs" />
     <Compile Include="Franchise\Events\Event.cs" />
     <Compile Include="Franchise\Events\Interference.cs" />

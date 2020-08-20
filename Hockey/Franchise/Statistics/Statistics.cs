@@ -28,7 +28,7 @@ public class Statistics
     internal static void Individual(Player p)
     {
         Console.Clear();
-        Write.CombatText(Colour.NAME, Colour.POSITION, Colour.TEAM,  p.Name, p.Position, Team.list[0].Name);
+        Write.Line(Colour.NAME, Colour.POSITION, Colour.TEAM,  p.Name, p.Position, Team.list[0].Name);
         Console.WriteLine("\n");
         Console.WriteLine(String.Format("{0,-18}{1,-12}{2,-15}{3,-15}{4,-9}{5,-20}{6,-12}{7,-15}","Games Played", "Goal", "Assist", "Points", "+/-","Penalty Minutes","Hits", "Shots Blocked"));
         Console.WriteLine(String.Format("{0,-5}{1,-14}{2,-13}{3,-15}{4,-14}{5,-15}{6,-15}{7,-15}{8,-15}","", p.GamesPlayed, p.GoalStat, p.AssistStat, p.AssistStat+p.GoalStat, p.Plusminus, p.PenaltyStat,p.HitStat ,p.BlockStat));

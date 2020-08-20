@@ -46,12 +46,12 @@ public class GM
         else if (choice != "0") Menu();
     }
 
-    private static void FreeAgents()
+    public static void FreeAgents()
     {
         
     }
 
-    private static void Trade(Team t)
+    public static void Trade(Team t)
     {
         Console.Clear();
          
