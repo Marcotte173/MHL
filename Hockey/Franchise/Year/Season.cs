@@ -52,10 +52,9 @@ internal class Season
                 Team.list[i].DLine2[m] = defence[0];
                 defence.RemoveAt(0);
             }
-            for (int o = 0; o < 2; o++)
-            {
-                Team.list[i].Goalies[o] = Team.list[i].GoalieRoster[o];
-            }
+            Utilities.SortOverall(Team.list[i].GoalieRoster.ToList());
+            Team.list[i].StartingGoalie = Team.list[i].GoalieRoster[0];
+            Team.list[i].BackupGoalie = Team.list[i].GoalieRoster[1];
             Team.list[i].Bench[0] = forward[0];
             Team.list[i].Bench[1] = defence[0];
         }

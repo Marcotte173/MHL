@@ -92,8 +92,8 @@ public class Coach
         Team.list[0].Roster[15] = Team.list[0].Bench[2]  = Roster.list[16];
         Team.list[0].Roster[16] = Team.list[0].Bench[3]  = Roster.list[17];
         Team.list[0].Roster[17] = Team.list[0].Bench[4]  = Roster.list[18];
-        Team.list[0].GoalieRoster[0] = Team.list[0].Goalies[0] = Roster.list[19];
-        Team.list[0].GoalieRoster[1] = Team.list[0].Goalies[1] = Roster.list[20];
+        Team.list[0].GoalieRoster[0] = Roster.list[19];
+        Team.list[0].GoalieRoster[1] = Roster.list[20];
 
     }
 

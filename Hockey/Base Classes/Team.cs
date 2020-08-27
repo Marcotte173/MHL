@@ -14,7 +14,6 @@ public class Team
     protected Player[] dLine1 = new Player[2] ;
     protected Player[] dLine2 = new Player[2] ;
     protected Player[] bench = new  Player[5] ;
-    protected Player[] goalies = new Player[2];
     protected Player[] roster = new Player[20] ;
     protected Player[] goalieRoster = new Player[2];
     protected List<Player> injured = new List<Player> { };
@@ -67,7 +66,6 @@ public class Team
     public Player[] DLine1 { get { return dLine1; } set { dLine1 = value; } }
     public Player[] DLine2 { get { return dLine2; } set { dLine2 = value; } }
     public Player[] Bench { get { return bench; } set { bench = value; } }
-    public Player[] Goalies { get { return goalies; } set { goalies = value; } }
     public Player[] Roster { get { return roster; } set { roster = value; } }
     public Player[] GoalieRoster { get { return goalieRoster; } set { goalieRoster = value; } }
     public List<Player> Injured { get { return injured; } set { injured = value; } }

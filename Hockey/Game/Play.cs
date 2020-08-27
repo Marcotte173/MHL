@@ -22,6 +22,7 @@ public class Play
     public static Player aLeftWing;
     public static Player aRightDefence;
     public static Player aLeftDefence;
+    public static Player aGoalie;
     public static List<Player> aOnIce = new List<Player> { };
     public static List<Player> bOnIce = new List<Player> { };
     public static Player bCenter;
@@ -29,6 +30,7 @@ public class Play
     public static Player bLeftWing;
     public static Player bRightDefence;
     public static Player bLeftDefence;
+    public static Player bGoalie;
     public static Rink location;
     public static Team offence;
     public static Team defence;
@@ -56,6 +58,8 @@ public class Play
         gameBShot = 0;
         gameAGoal = 0;
         gameBGoal = 0;
+        aGoalie = a.StartingGoalie;
+        bGoalie = b.StartingGoalie;
         ChangeFLinesA(a.Line1);
         ChangeFLinesB(b.Line1);
         ChangeDLinesA(a.Line1);
@@ -75,23 +79,29 @@ public class Play
         int keypress = 0;
         while (period < 4)
         {
+            time = 0;
             while (time < 40)
             {
+                keypress++;
                 if (loosePuck) ScrambleForPuck();
                 else
-                {
-                    keypress++;
+                {                    
                     if (offence == a) WhoGoes(OffenceDecide(a), DefenceDecide(b));
                     else WhoGoes(OffenceDecide(b), DefenceDecide(a));
                     if (keypress > 5)
                     {
                         Utilities.KeyPress();
                         keypress = 0;
+                        Console.Clear();
+                        playByPlay.Clear();
                     }
                     Thread.Sleep(400);
                 }                
                 time++;
             }
+            Console.Clear();
+            Write.Line("The period is over!");
+            Utilities.KeyPress();
             period++;
         }
     }
@@ -99,16 +109,17 @@ public class Play
     public static void Display()
     {
         Console.Clear();
-        
-        //Display what happened        
+
+        //Display what happened     
+        Console.SetCursorPosition(0, 18);
         foreach (string play in playByPlay)
         {
-            Write.Line(play + "\n");
+            Write.Line(play);
         }
         Write.Line(80, 5, location.ToString());
         Write.Line(50, 0, a.Name);
         Write.Line(80, 0, b.Name);
-        Write.Line(50, 1, gameBGoal.ToString());
+        Write.Line(50, 1, gameAGoal.ToString());
         Write.Line(80, 1, gameBGoal.ToString());
         Write.Line(50, 10, a.CurrentFLine[0].Name.ToString());
         Write.Line(50, 11, a.CurrentFLine[1].Name.ToString());
@@ -132,7 +143,7 @@ public class Play
 
     public static int OffenceDecide(Team offence)
     {
-        int choice = 0;
+        int choice;
         if ((location == Rink.ALOW && offence == b) || (location == Rink.BLOW && offence == a))
         {
             choice = Utilities.RandomInt(1, 8);
@@ -143,13 +154,13 @@ public class Play
                 offence.teamOffence = TeamOffence.WristShot;
             }
             //onetimer                                 
-            if (choice == 3)
+            else if (choice == 3)
             {
                 x = (carrier[0].Passing + carrier[0].OffAware * 2) / 3;
                 offence.teamOffence = TeamOffence.OneTimer;
             }
             //carry                                    
-            if (choice == 4 || choice == 5)
+            else if (choice == 4 || choice == 5)
             {
                 x = (carrier[0].Speed * 3 + carrier[0].Handling * 2) / 5;
                 offence.teamOffence = TeamOffence.Carry;
@@ -161,11 +172,11 @@ public class Play
                 offence.teamOffence = TeamOffence.Pass;
             }
         }
-        if ((location == Rink.AHIGH && offence == b) || (location == Rink.BHIGH && offence == a))
+        else if ((location == Rink.AHIGH && offence == b) || (location == Rink.BHIGH && offence == a))
         {
             if (carrier[0].Position == "Forward")
             {
-                int choice = Utilities.RandomInt(1, 6);
+                choice = Utilities.RandomInt(1, 6);
                 //carry
                 if (choice == 1 || choice == 2)
                 {
@@ -179,9 +190,9 @@ public class Play
                     offence.teamOffence = TeamOffence.Pass;
                 }
             }
-            if (carrier[0].Position == "Defence")
+            else if (carrier[0].Position == "Defence")
             {
-                int choice = Utilities.RandomInt(1, 6);
+                choice = Utilities.RandomInt(1, 6);
                 //wristshot
                 if (choice == 1 || choice == 2)
                 {
@@ -204,9 +215,9 @@ public class Play
         }
         else
         {
-            int choice = Utilities.RandomInt(1, 6);
+            choice = Utilities.RandomInt(1, 6);
             //carry
-            if (choice == 1 || choice == 2)
+            if (choice == 1 || choice == 2 || choice == 3)
             {
                 x = (carrier[0].Speed * 3 + carrier[0].Handling * 2) / 5;
                 offence.teamOffence = TeamOffence.Carry;
@@ -234,9 +245,11 @@ public class Play
             if (p != null)
                 if (p.DefAware > defenceman.DefAware) defenceman = p;
         }
+        int choice;
         if ((location == Rink.ALOW && defence == a) || (location == Rink.BLOW && defence == b))
         {
-            int choice = Utilities.RandomInt(1, 10);
+            choice = Utilities.RandomInt(1, 10);
+            Write.Line("I rolled a " + choice);
             //PokeCheck
             if (choice == 1)
             {
@@ -244,19 +257,19 @@ public class Play
                 defence.teamDefence = TeamDefence.PokeCheck;
             }
             //Check
-            if (choice == 2)
+            else if (choice == 2)
             {
                 y = (defenceman.DefAware + defenceman.Checking) / 2;
                 defence.teamDefence = TeamDefence.Check;
             }
             //InterceptPass
-            if (choice == 3 || choice == 4)
+            else if (choice == 3 || choice == 4)
             {
                 y = defenceman.DefAware;
                 defence.teamDefence = TeamDefence.InterceptPass;
             }
             //Block Shot
-            if (choice == 5 || choice == 6 || choice == 7)
+            else if (choice == 5 || choice == 6 || choice == 7)
             {
                 y = defenceman.DefAware;
                 defence.teamDefence = TeamDefence.BlockShot;
@@ -268,9 +281,10 @@ public class Play
                 defence.teamDefence = TeamDefence.Positioning;
             }
         }
-        if ((location == Rink.AHIGH && defence == a) || (location == Rink.BHIGH && defence == b))
+        else if ((location == Rink.AHIGH && defence == a) || (location == Rink.BHIGH && defence == b))
         {
-            int choice = Utilities.RandomInt(1, 10);
+            choice = Utilities.RandomInt(1, 10);
+            Write.Line("I rolled a " + choice);
             //PokeCheck
             if (choice == 1 || choice == 2)
             {
@@ -278,19 +292,19 @@ public class Play
                 defence.teamDefence = TeamDefence.PokeCheck;
             }
             //Check
-            if (choice == 3)
+            else if (choice == 3)
             {
                 y = (defenceman.DefAware + defenceman.Checking) / 2;
                 defence.teamDefence = TeamDefence.Check;
             }
             //InterceptPass
-            if (choice == 4 || choice == 5)
+            else if (choice == 4 || choice == 5)
             {
                 y = defenceman.DefAware;
                 defence.teamDefence = TeamDefence.InterceptPass;
             }
             //Block Shot
-            if (choice == 6 || choice == 7)
+            else if (choice == 6 || choice == 7)
             {
                 y = defenceman.DefAware;
                 defence.teamDefence = TeamDefence.BlockShot;
@@ -305,7 +319,8 @@ public class Play
         //if (location == Rink.NEUTRAL)
         else
         {
-            int choice = Utilities.RandomInt(1, 9);
+            choice = Utilities.RandomInt(1, 9);
+            Write.Line("I rolled a " + choice);
             //PokeCheck
             if (choice == 1 || choice == 2)
             {
@@ -313,13 +328,13 @@ public class Play
                 defence.teamDefence = TeamDefence.PokeCheck;
             }
             //Check
-            if (choice == 3 || choice == 4 || choice == 5)
+            else if (choice == 3 || choice == 4 || choice == 5)
             {
                 y = (defenceman.DefAware + defenceman.Checking) / 2;
                 defence.teamDefence = TeamDefence.Check;
             }
             //InterceptPass
-            if (choice == 6)
+            else if (choice == 6)
             {
                 y = defenceman.DefAware;
                 defence.teamDefence = TeamDefence.InterceptPass;

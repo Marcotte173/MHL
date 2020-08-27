@@ -19,8 +19,8 @@ public class Roster
         Team.list[0].Bench[2],
         Team.list[0].Bench[3],
         Team.list[0].Bench[4],
-        Team.list[0].Goalies[0],
-        Team.list[0].Goalies[1]
+        Team.list[0].GoalieRoster[0],
+        Team.list[0].GoalieRoster[1]
     };
     internal static void Menu()
     {

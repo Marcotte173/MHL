@@ -19,7 +19,7 @@ public class Actions
         }
         else
         {
-            foreach (Player player in Play.aOnIce) if (player != Play.carrier[0]) available.Add(player);
+            foreach (Player player in Play.bOnIce) if (player != Play.carrier[0]) available.Add(player);
             int roll = Utilities.RandomInt(0, available.Count);
             receive = available[roll];
         }
@@ -49,6 +49,7 @@ public class Actions
             Play.playByPlay.Add($"HE SCORES!\n{p.Name} puts one past the goalie!");
             p.GoalStat++;
             p.Team.Score++;
+            Play.Neutral();
             if (offence == Play.a) Play.gameAGoal++;
             else Play.gameBGoal++;
         }
@@ -56,11 +57,11 @@ public class Actions
         {
             Play.playByPlay.Add($"BIG SAVE!\n{Play.defence.StartingGoalie.Name} comes up with a big save to keep his team out of trouble");
             Play.Display();
-            Thread.Sleep(300);            
-            Play.FaceOff();
-            Play.PlayGame();
+            Thread.Sleep(300);                  
         }
         Play.Display();
+        Play.FaceOff();
+        Play.PlayGame();       
     }
     internal static void WristShot(Player p, Team offence)
     {
@@ -74,6 +75,7 @@ public class Actions
             Play.playByPlay.Add($"HE SCORES!\n{p.Name} puts one past the goalie!");
             p.GoalStat++;
             p.Team.Score++;
+            Play.Neutral();
             if (offence == Play.a) Play.gameAGoal++;
             else Play.gameBGoal++;
         }
@@ -82,10 +84,11 @@ public class Actions
             Play.playByPlay.Add($"BIG SAVE!\n{Play.defence.StartingGoalie.Name} comes up with a big save to keep his team out of trouble");
             Play.Display();
             Thread.Sleep(300);
-            Play.FaceOff();
-            Play.PlayGame();
         }
         Play.Display();
+        Play.FaceOff();
+        Play.PlayGame();
+        
     }
     internal static void OneTimer(Player p, Team offence)
     {
@@ -105,6 +108,7 @@ public class Actions
         {
             Play.playByPlay.Add($"HE SCORES!\n{receive.Name} puts one past the goalie!");
             receive.GoalStat++;
+            Play.Neutral();
             if (offence == Play.a) Play.gameAGoal++;
             else Play.gameBGoal++;
             if (Play.carrier.Count > 1)
@@ -112,7 +116,7 @@ public class Actions
                 Play.playByPlay.Add($"{Play.carrier[1].Name} gets the assist!");
                 Play.carrier[1].AssistStat++;
             }
-            if (Play.carrier.Count > 2)
+            else if (Play.carrier.Count > 2)
             {
                 Play.playByPlay.Add($"{Play.carrier[2].Name} gets the assist!");
                 Play.carrier[2].AssistStat++;
@@ -124,9 +128,10 @@ public class Actions
             Play.playByPlay.Add($"BIG SAVE!\n{Play.defence.StartingGoalie.Name} comes up with a big save to keep his team out of trouble");
             Play.Display();
             Thread.Sleep(300);
-            Play.FaceOff();
-            Play.PlayGame();
         }
+        Play.Display();
+        Play.FaceOff();
+        Play.PlayGame();
     }
     internal static void Carry(Player p)
     {

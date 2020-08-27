@@ -10,7 +10,7 @@ internal class Utilities
     internal static double difficulty = 1;
     internal static void KeyPress()
     {
-        Console.WriteLine("Press any key to continue");
+        Write.Line(0,28,"Press any key to continue");
         Console.ReadKey(true);
     }    
 
