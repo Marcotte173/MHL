@@ -22,6 +22,7 @@ public class Team
     public TeamOffence teamOffence;
     public TeamDefence teamDefence;
 
+    protected int gamesPlayed;
     protected int win;
     protected int loss;
     protected int otLoss;
@@ -35,6 +36,8 @@ public class Team
     protected string gmName;
     protected int score;
     protected int shots;
+    protected int totalScore;
+    protected int totalShots;
 
 
     public Team() 
@@ -72,6 +75,9 @@ public class Team
     public Player StartingGoalie { get { return startingGoalie; } set { startingGoalie = value; } }
     public Player BackupGoalie { get { return backupGoalie; } set { backupGoalie = value; } }
     public int Score { get { return score; } set { score = value; } }
+    public int TotalScore { get { return totalScore; } set { totalScore = value; } }
+    public int TotalShots { get { return totalShots; } set { totalShots = value; } }
+    public int GamesPlayed { get { return gamesPlayed; } set { gamesPlayed = value; } }
     public int Shots { get { return shots; } set { shots = value; } }
     public virtual void Draft(List<Player>f, List<Player>d, List<Player>g) { }
     public virtual void Draft(List<Player> f, List<Player> d, List<Player> g, Player chosen, int round) { }

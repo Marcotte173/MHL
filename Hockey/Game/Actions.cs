@@ -39,6 +39,9 @@ public class Actions
     }
     internal static void SlapShot(Player p, Team offence)
     {
+        p.Team.Shots++;
+        if (offence == Play.a) Play.gameAShot++;
+        else Play.gameBShot++;
         if (offence == Play.a) Play.gameAShot++;
         else Play.gameBShot++;
         Play.playByPlay.Add(p.Name + " winds up for a slapshot!");
@@ -66,6 +69,8 @@ public class Actions
     internal static void WristShot(Player p, Team offence)
     {
         p.Team.Shots++;
+        if (offence == Play.a) Play.gameAShot++;
+        else Play.gameBShot++;
         Advance();
         Play.playByPlay.Add(p.Name + " takes a quick wristshot!");
         Play.Display();
@@ -93,6 +98,8 @@ public class Actions
     internal static void OneTimer(Player p, Team offence)
     {
         offence.Shots++;
+        if (offence == Play.a) Play.gameAShot++;
+        else Play.gameBShot++;
         List<Player> available = new List<Player> { };
         Player receive;
         foreach (Player player in offence.CurrentFLine) 

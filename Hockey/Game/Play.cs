@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,8 +11,11 @@ using System.Xml.Serialization;
 public enum Rink {ALOW, AHIGH, NEUTRAL, BHIGH, BLOW };
 public class Play
 {
+    static int keypress;
+    public static Game theGame;
     public static Team a;
     public static Team b;
+    public static bool tie;
     public static int gameAShot;
     public static int gameBShot;
     public static int gameAGoal;
@@ -48,6 +53,8 @@ public class Play
     /// <param name="game"></param>
     public static void Start(Game game)
     {
+        tie = false;
+        theGame = game;
         game.Played = true;
         period = 1;
         time = 0;
@@ -56,31 +63,28 @@ public class Play
         b = game.B;
         gameAShot = 0;
         gameBShot = 0;
-        gameAGoal = 0;
-        gameBGoal = 0;
+        game.AScore = gameAGoal = 0;
+        game.BScore = gameBGoal = 0;
         aGoalie = a.StartingGoalie;
         bGoalie = b.StartingGoalie;
         ChangeFLinesA(a.Line1);
         ChangeFLinesB(b.Line1);
-        ChangeDLinesA(a.Line1);
-        ChangeDLinesB(b.Line1);
+        ChangeDLinesA(a.DLine1);
+        ChangeDLinesB(b.DLine1);
         FaceOff();
-        PlayGame();     
-        if (a.Score != b.Score) GameRecap();
-        else
-        {
-            TieBreak();
-            GameRecap();
-        }
+        PlayGame();
+        Write.Line("And that's the game!");
+        if (a.Score == b.Score) TieBreak();
+        GameRecap();
     }
 
     public static void PlayGame()
     {
-        int keypress = 0;
+        keypress = 0;
         while (period < 4)
         {
             time = 0;
-            while (time < 40)
+            while (time < 20)
             {
                 keypress++;
                 if (loosePuck) ScrambleForPuck();
@@ -90,20 +94,29 @@ public class Play
                     else WhoGoes(OffenceDecide(b), DefenceDecide(a));
                     if (keypress > 5)
                     {
-                        Utilities.KeyPress();
-                        keypress = 0;
-                        Console.Clear();
-                        playByPlay.Clear();
+                        Utilities.KeyPress();                        
+                        ClearDisplay();
                     }
                     Thread.Sleep(400);
                 }                
                 time++;
             }
             Console.Clear();
-            Write.Line("The period is over!");
-            Utilities.KeyPress();
             period++;
-        }
+            if(period < 4)
+            {
+                Write.Line("The period is over!");
+                Neutral();
+                FaceOff();
+            }            
+        }        
+    }
+
+    private static void ClearDisplay()
+    {
+        Console.Clear();
+        keypress = 0;
+        playByPlay.Clear();
     }
 
     public static void Display()
@@ -116,17 +129,30 @@ public class Play
         {
             Write.Line(play);
         }
+        Write.Line(0,0,"Period " + period);
         Write.Line(80, 5, location.ToString());
         Write.Line(50, 0, a.Name);
         Write.Line(80, 0, b.Name);
-        Write.Line(50, 1, gameAGoal.ToString());
-        Write.Line(80, 1, gameBGoal.ToString());
-        Write.Line(50, 10, a.CurrentFLine[0].Name.ToString());
-        Write.Line(50, 11, a.CurrentFLine[1].Name.ToString());
-        Write.Line(50, 12, a.CurrentFLine[2].Name.ToString());
-        Write.Line(80, 10, b.CurrentFLine[0].Name.ToString());
-        Write.Line(80, 11, b.CurrentFLine[1].Name.ToString());
-        Write.Line(80, 12, b.CurrentFLine[2].Name.ToString());
+        Write.Line(60, 1, Colour.GOAL + gameAGoal.ToString()+Colour.RESET);
+        Write.Line(90, 1, Colour.GOAL + gameBGoal.ToString()+Colour.RESET);
+        Write.Line(50, 2, "Shots: " + gameAShot.ToString() + Colour.RESET);
+        Write.Line(80, 2, "Shots: " + gameBShot.ToString() + Colour.RESET);
+        DisplayName(50, 10, a.CurrentFLine[0]);
+        DisplayName(50, 11, a.CurrentFLine[1]);
+        DisplayName(50, 12, a.CurrentFLine[2]);
+        DisplayName(50, 14, a.CurrentDLine[0]);
+        DisplayName(50, 15, a.CurrentDLine[1]);
+        DisplayName(80, 10, b.CurrentFLine[0]);
+        DisplayName(80, 11, b.CurrentFLine[1]);
+        DisplayName(80, 12, b.CurrentFLine[2]);
+        DisplayName(80, 14, b.CurrentDLine[0]);
+        DisplayName(80, 15, b.CurrentDLine[1]);
+    }
+
+    private static void DisplayName(int x, int y, Player p)
+    {
+        if (p.HasPuck) Write.Line(x, y, Colour.NAME + p.Name.ToString() + Colour.RESET);
+        else Write.Line(x, y, p.Name.ToString());
     }
 
     public static void ScrambleForPuck()
@@ -415,12 +441,47 @@ public class Play
 
     public static void TieBreak()
     {
-
+        tie = true;
+        Console.Clear();
+        int breaker = Utilities.RandomInt(0, 2);
+        if (breaker == 0)
+        {
+            a.Score++;
+            Write.Line($"{a.Name} wins the game in overtime!");
+        }
+        else
+        {
+            b.Score++;
+            Write.Line($"{b.Name} wins the game in overtime!");
+        }        
     }
 
     public static void GameRecap()
     {
+        Utilities.KeyPress();
+        Console.Clear();
+        a.GamesPlayed++;
+        b.GamesPlayed++;
+        foreach (Player p in a.Roster) if(p!=null) p.GamesPlayed++;
+        foreach (Player p in b.Roster) if (p != null) p.GamesPlayed++;
+        foreach (Player p in a.GoalieRoster) if (p != null) p.GamesPlayed++;
+        foreach (Player p in b.GoalieRoster) if (p != null) p.GamesPlayed++;
+        a.TotalScore += a.Score;
+        a.TotalShots += a.Shots;
+        b.TotalScore += b.Score;
+        b.TotalShots += b.Shots;
+        a.Score = 0;
+        a.Shots = 0;
+        b.Score = 0;
+        b.Shots = 0;
+        if (a.Score > b.Score) Win(a,b);
+        else Win(b,a);
+        Utilities.KeyPress();
+    }
 
+    private static void Win(Team w,Team l)
+    {
+        
     }
 
 
@@ -431,6 +492,8 @@ public class Play
 
     public static void FaceOff()
     {
+        Utilities.KeyPress();
+        ClearDisplay();
         momentum = 0;
         carrier.Clear();
         playByPlay.Add("The teams line up for the faceoff");

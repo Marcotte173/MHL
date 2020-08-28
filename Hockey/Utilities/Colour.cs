@@ -27,7 +27,7 @@ public class Colour
     //public const string RAREDROP = "\u001b[38;5;127m";
     //public const string ENHANCEMENT = "\u001b[38;5;170m";
     public const string ASSIST = "\u001b[38;5;50m";
-    //public const string SPECIAL = "\u001b[38;5;89m";
+    public const string SPECIAL = "\u001b[38;5;89m";
     //public const string HIT = "\u001b[38;5;142m";
     public const string SPEED = "\u001b[38;5;167m";
     //public const string DEFENCE = "\u001b[38;5;189m";
