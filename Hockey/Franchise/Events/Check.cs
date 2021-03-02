@@ -43,9 +43,9 @@ public class Check
             if (game.Played)
             {
                 Console.SetCursorPosition(8, 7);
-                Console.WriteLine(Colour.GOAL + game.AScore + Colour.RESET);
+                Console.WriteLine(Colour.GOAL + game.A.score[Season.gameWeek] + Colour.RESET);
                 Console.SetCursorPosition(33, 7);
-                Console.WriteLine(Colour.GOAL + game.BScore + Colour.RESET);
+                Console.WriteLine(Colour.GOAL + game.B.score[Season.gameWeek] + Colour.RESET);
             }            
             else
             {

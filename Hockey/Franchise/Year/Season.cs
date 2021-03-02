@@ -4,6 +4,7 @@ using System.Linq;
 internal class Season
 {
     internal static bool season = true;
+    internal static int gameWeek = 0;
     internal static void Start()
     {
         Console.Clear();

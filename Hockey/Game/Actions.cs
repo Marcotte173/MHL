@@ -39,22 +39,15 @@ public class Actions
     }
     internal static void SlapShot(Player p, Team offence)
     {
-        p.Team.Shots++;
-        if (offence == Play.a) Play.gameAShot++;
-        else Play.gameBShot++;
-        if (offence == Play.a) Play.gameAShot++;
-        else Play.gameBShot++;
+        Shot(p, offence);
+        Advance();
         Play.playByPlay.Add(p.Name + " winds up for a slapshot!");
         Play.Display();
         Thread.Sleep(300);
         if ((p.Shooting + p.OffAware) / 2 + Utilities.RandomInt(0, 15) > Play.defence.StartingGoalie.Angles + Utilities.RandomInt(0, 18))
         {
             Play.playByPlay.Add($"HE SCORES!\n{p.Name} puts one past the goalie!");
-            p.GoalStat++;
-            p.Team.Score++;
-            Play.Neutral();
-            if (offence == Play.a) Play.gameAGoal++;
-            else Play.gameBGoal++;
+            Goal(p, offence);
         }
         else
         {
@@ -68,9 +61,7 @@ public class Actions
     }
     internal static void WristShot(Player p, Team offence)
     {
-        p.Team.Shots++;
-        if (offence == Play.a) Play.gameAShot++;
-        else Play.gameBShot++;
+        Shot(p,offence);
         Advance();
         Play.playByPlay.Add(p.Name + " takes a quick wristshot!");
         Play.Display();
@@ -78,11 +69,7 @@ public class Actions
         if ((p.Shooting + p.OffAware) / 2 + Utilities.RandomInt(0, 15) > (Play.defence.StartingGoalie.Stick + Play.defence.StartingGoalie.Glove)/2 + Utilities.RandomInt(0, 18))
         {
             Play.playByPlay.Add($"HE SCORES!\n{p.Name} puts one past the goalie!");
-            p.GoalStat++;
-            p.Team.Score++;
-            Play.Neutral();
-            if (offence == Play.a) Play.gameAGoal++;
-            else Play.gameBGoal++;
+            Goal(p, offence);
         }
         else
         {
@@ -96,10 +83,7 @@ public class Actions
         
     }
     internal static void OneTimer(Player p, Team offence)
-    {
-        offence.Shots++;
-        if (offence == Play.a) Play.gameAShot++;
-        else Play.gameBShot++;
+    {        
         List<Player> available = new List<Player> { };
         Player receive;
         foreach (Player player in offence.CurrentFLine) 
@@ -109,26 +93,15 @@ public class Actions
         Play.playByPlay.Add(p.Name + " passes to " + receive.Name);
         Play.GivePuck(receive);
         Play.playByPlay.Add(receive.Name + " shoots immediately! ");
+        Shot(receive, offence);
+        Advance();
         Play.Display();
         Thread.Sleep(300);
         if ((receive.Shooting + receive.OffAware) / 2 + Utilities.RandomInt(0, 15) > Play.defence.StartingGoalie.Agility + Utilities.RandomInt(0, 18))
         {
             Play.playByPlay.Add($"HE SCORES!\n{receive.Name} puts one past the goalie!");
-            receive.GoalStat++;
-            Play.Neutral();
-            if (offence == Play.a) Play.gameAGoal++;
-            else Play.gameBGoal++;
-            if (Play.carrier.Count > 1)
-            {
-                Play.playByPlay.Add($"{Play.carrier[1].Name} gets the assist!");
-                Play.carrier[1].AssistStat++;
-            }
-            else if (Play.carrier.Count > 2)
-            {
-                Play.playByPlay.Add($"{Play.carrier[2].Name} gets the assist!");
-                Play.carrier[2].AssistStat++;
-            }
-            receive.Team.Score++;
+            Goal(receive, offence);            
+            receive.Team.score[Season.gameWeek]++;
         }
         else
         {
@@ -226,4 +199,35 @@ public class Actions
             else Play.ALow();
         }
     }    
+    public static void Shot(Player p, Team offence)
+    {
+        if (offence == Play.a) Play.gameAShot++;
+        else Play.gameBShot++;
+        p.Team.shots[Season.gameWeek]++;
+        p.shotStat[Season.gameWeek]++;
+    }
+    public static void Goal(Player p,  Team offence)
+    {
+        p.goalStat[Season.gameWeek]++;
+        p.pointStat[Season.gameWeek]++;
+        p.Team.score[Season.gameWeek]++;
+        if (Play.carrier.Count > 1)
+        {
+            Play.playByPlay.Add($"{Play.carrier[1].Name} gets the assist!");
+            Play.carrier[1].assistStat[Season.gameWeek]++;
+            Play.carrier[1].pointStat[Season.gameWeek]++;
+            if (!Statistics.leaderboardList.Contains(Play.carrier[1])) Statistics.leaderboardList.Add(Play.carrier[1]);
+        }
+        else if (Play.carrier.Count > 2)
+        {
+            Play.playByPlay.Add($"{Play.carrier[2].Name} gets the assist!");
+            Play.carrier[2].assistStat[Season.gameWeek]++;
+            Play.carrier[2].pointStat[Season.gameWeek]++;
+            if (!Statistics.leaderboardList.Contains(Play.carrier[2])) Statistics.leaderboardList.Add(Play.carrier[2]);
+        }
+        Play.Neutral();
+        if (offence == Play.a) Play.gameAGoal++;
+        else Play.gameBGoal++;
+        if (!Statistics.leaderboardList.Contains(p)) Statistics.leaderboardList.Add(p);
+    }
 }

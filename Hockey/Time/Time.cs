@@ -25,6 +25,7 @@ public class Time
         {
             day -= 4;
             addweek++;
+            Season.gameWeek++;
         }
         week += addweek;
         while (week > 4)

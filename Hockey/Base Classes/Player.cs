@@ -24,33 +24,35 @@ public class Player
     protected int agility;
     protected int butterfly;
     protected int overall;
-    protected int goalStat;
-    protected int assistStat;
-    protected int pointStat;
-    protected int checkStat;
-    protected int penaltyStat;
-    protected int blockStat;
-    protected int hitStat;
-    protected int saveStat;
-    protected int allowGoalStat;
+    public int[] shotStat =          new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0 };
+    public int[] goalStat =          new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] assistStat =        new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] pointStat =         new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] checkStat =         new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] penaltyStat =       new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] blockStat =         new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] hitStat =           new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] saveStat =          new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+    public int[] allowGoalStat =     new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
     protected Team team = new Team();
     protected double savePercentStat;
     protected bool hasPuck;
 
     public Player() { }
 
+    public int TotalGoal { get { return goalStat[1] + goalStat[2] + goalStat[3] + goalStat[4] + goalStat[5] + goalStat[6] + goalStat[7] + goalStat[8] + goalStat[9] + goalStat[10] + goalStat[11]; } }
+    public int TotalAssist { get { return assistStat[1] + assistStat[2] + assistStat[3] + assistStat[4] + assistStat[5] + assistStat[6] + assistStat[7] + assistStat[8] + assistStat[9] + assistStat[10] + assistStat[11]; } }
+    public int TotalPoint { get { return pointStat[1] + pointStat[2] + pointStat[3] + pointStat[4] + pointStat[5] + pointStat[6] + pointStat[7] + pointStat[8] + pointStat[9] + pointStat[10] + pointStat[11]; } }
+    public int TotalCheck { get { return checkStat[1] + checkStat[2] + checkStat[3] + checkStat[4] + checkStat[5] + checkStat[6] + checkStat[7] + checkStat[8] + checkStat[9] + checkStat[10] + checkStat[11]; } }
+    public int TotalPenalty { get { return penaltyStat[1] + penaltyStat[2] + penaltyStat[3] + penaltyStat[4] + penaltyStat[5] + penaltyStat[6] + penaltyStat[7] + penaltyStat[8] + penaltyStat[9] + penaltyStat[10] + penaltyStat[11]; } }
+    public int TotalBlock { get { return blockStat[1] + blockStat[2] + blockStat[3] + blockStat[4] + blockStat[5] + blockStat[6] + blockStat[7] + blockStat[8] + blockStat[9] + blockStat[10] + blockStat[11]; } }
+    public int TotalHit { get { return hitStat[1] + hitStat[2] + hitStat[3] + hitStat[4] + hitStat[5] + hitStat[6] + hitStat[7] + hitStat[8] + hitStat[9] + hitStat[10] + hitStat[11]; } }
+    public int TotaTotalSavelGoal { get { return saveStat[1] + saveStat[2] + saveStat[3] + saveStat[4] + saveStat[5] + saveStat[6] + saveStat[7] + saveStat[8] + saveStat[9] + saveStat[10] + saveStat[11]; } }
+    public int TotalAllowGoal { get { return allowGoalStat[1] + allowGoalStat[2] + allowGoalStat[3] + allowGoalStat[4] + allowGoalStat[5] + allowGoalStat[6] + allowGoalStat[7] + allowGoalStat[8] + allowGoalStat[9] + allowGoalStat[10] + allowGoalStat[11]; } }
+
     public bool HasPuck { get { return hasPuck; } set { hasPuck = value; } }
-    public int GoalStat { get { return goalStat; } set { goalStat = value; } }
-    public int AssistStat { get { return assistStat; } set { assistStat = value; } }
     public int GamesPlayed { get { return gamesPlayed; } set { gamesPlayed = value; } }
     public int Plusminus { get { return plusminus; } set { plusminus = value; } }
-    public int CheckStat { get { return checkStat; } set { checkStat = value; } }
-    public int PenaltyStat { get { return penaltyStat; } set { penaltyStat = value; } }
-    public int BlockStat { get { return blockStat; } set { blockStat = value; } }
-    public int HitStat { get { return hitStat; } set { hitStat = value; } }
-    public int PointStat { get { return goalStat + assistStat; }  }
-    public int SaveStat { get { return saveStat; } set { saveStat = value; } }
-    public int AllowGoalStat { get { return allowGoalStat; } set { allowGoalStat = value; } }
     public double SavePercentStat { get { return savePercentStat; } set { savePercentStat = value; } }
     public virtual double Overall { get { return 0; } }
     public virtual double Price { get { return 0; } }

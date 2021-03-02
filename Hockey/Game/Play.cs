@@ -72,44 +72,48 @@ public class Play
         ChangeDLinesA(a.DLine1);
         ChangeDLinesB(b.DLine1);
         FaceOff();
-        PlayGame();
-        Write.Line("And that's the game!");
-        if (a.Score == b.Score) TieBreak();
-        GameRecap();
+        StartPeriod();        
     }
-
     public static void PlayGame()
     {
-        keypress = 0;
-        while (period < 4)
+        keypress++;
+        if (loosePuck) ScrambleForPuck();
+        else
         {
-            time = 0;
-            while (time < 20)
-            {
-                keypress++;
-                if (loosePuck) ScrambleForPuck();
-                else
-                {                    
-                    if (offence == a) WhoGoes(OffenceDecide(a), DefenceDecide(b));
-                    else WhoGoes(OffenceDecide(b), DefenceDecide(a));
-                    if (keypress > 5)
-                    {
-                        Utilities.KeyPress();                        
-                        ClearDisplay();
-                    }
-                    Thread.Sleep(400);
-                }                
-                time++;
-            }
-            Console.Clear();
-            period++;
-            if(period < 4)
-            {
-                Write.Line("The period is over!");
-                Neutral();
-                FaceOff();
-            }            
-        }        
+            if (offence == a) WhoGoes(OffenceDecide(a), DefenceDecide(b));
+            else WhoGoes(OffenceDecide(b), DefenceDecide(a));
+        }
+        if (keypress > 4)
+        {
+            Utilities.KeyPress();
+            keypress = 0;
+            ClearDisplay();
+        }
+        else Thread.Sleep(400);        
+        time++;
+        if (time < 10) PlayGame();        
+    }
+
+    public static void StartPeriod()
+    {
+        time = 0;
+        keypress = 0;
+        EndPeriod();
+    }
+
+    public static void EndPeriod()
+    {
+        PlayGame();
+        Console.Clear();
+        period++;
+        if (period < 4)
+        {
+            Write.Line("The period is over!");
+            Neutral();
+            FaceOff();
+            StartPeriod();
+        }
+        else GameRecap();
     }
 
     private static void ClearDisplay()
@@ -122,15 +126,14 @@ public class Play
     public static void Display()
     {
         Console.Clear();
-
+        RinkDisplay();
         //Display what happened     
         Console.SetCursorPosition(0, 18);
         foreach (string play in playByPlay)
         {
             Write.Line(play);
         }
-        Write.Line(0,0,"Period " + period);
-        Write.Line(80, 5, location.ToString());
+        Write.Line(0,0,"Period " + period);        
         Write.Line(50, 0, a.Name);
         Write.Line(80, 0, b.Name);
         Write.Line(60, 1, Colour.GOAL + gameAGoal.ToString()+Colour.RESET);
@@ -147,6 +150,26 @@ public class Play
         DisplayName(80, 12, b.CurrentFLine[2]);
         DisplayName(80, 14, b.CurrentDLine[0]);
         DisplayName(80, 15, b.CurrentDLine[1]);
+    }
+
+    internal static void RinkDisplay()
+    {
+        int offset = 55;
+        Write.Line(offset,3,"  _____________________________");
+        Write.Line(offset,4," /                             \\");
+        Write.Line(offset,5,"|                               |");
+        Write.Line(offset,6,"|                               |");
+        Write.Line(offset,7,"|                               |");
+        Write.Line(offset, 8," \\_____________________________/");
+        Write.Line(2+offset, 6, Colour.INJURY + "E");
+        Write.Line(30+offset, 6, Colour.INJURY + "3");
+        for (int i = 1; i < 6; i++) Write.Line(10+offset, i+3, Colour.POSITION + "|");
+        for (int i = 1; i < 6; i++) Write.Line(22+offset, i+3, Colour.POSITION + "|");
+        for (int i = 1; i < 6; i++) Write.Line(16 + offset, i+3, Colour.INJURY + "|");
+        for (int i = 1; i < 6; i++) Write.Line(3 + offset,  i+3, Colour.INJURY + "|");
+        for (int i = 1; i < 6; i++) Write.Line(29 + offset, i+3, Colour.INJURY + "|");
+        int x = (location == Rink.ALOW) ? 5 : (location == Rink.AHIGH) ? 9 : (location == Rink.NEUTRAL) ? 16 : (location == Rink.BHIGH) ? 23 : 27;
+        Write.Line(x + offset, 6, "O");
     }
 
     private static void DisplayName(int x, int y, Player p)
@@ -342,7 +365,6 @@ public class Play
                 defence.teamDefence = TeamDefence.Positioning;
             }
         }
-        //if (location == Rink.NEUTRAL)
         else
         {
             choice = Utilities.RandomInt(1, 9);
@@ -446,42 +468,39 @@ public class Play
         int breaker = Utilities.RandomInt(0, 2);
         if (breaker == 0)
         {
-            a.Score++;
+            a.score[Season.gameWeek]++;
             Write.Line($"{a.Name} wins the game in overtime!");
         }
         else
         {
-            b.Score++;
+            b.score[Season.gameWeek]++;
             Write.Line($"{b.Name} wins the game in overtime!");
         }        
     }
 
     public static void GameRecap()
     {
+        Write.Line("And that's the game!");        
+        if (a.score[Season.gameWeek] == b.score[Season.gameWeek]) TieBreak();
         Utilities.KeyPress();
-        Console.Clear();
-        a.GamesPlayed++;
-        b.GamesPlayed++;
         foreach (Player p in a.Roster) if(p!=null) p.GamesPlayed++;
         foreach (Player p in b.Roster) if (p != null) p.GamesPlayed++;
         foreach (Player p in a.GoalieRoster) if (p != null) p.GamesPlayed++;
         foreach (Player p in b.GoalieRoster) if (p != null) p.GamesPlayed++;
-        a.TotalScore += a.Score;
-        a.TotalShots += a.Shots;
-        b.TotalScore += b.Score;
-        b.TotalShots += b.Shots;
-        a.Score = 0;
-        a.Shots = 0;
-        b.Score = 0;
-        b.Shots = 0;
-        if (a.Score > b.Score) Win(a,b);
+        a.totalScore += a.score[Season.gameWeek];
+        a.totalShots += a.shots[Season.gameWeek];
+        b.totalScore += b.score[Season.gameWeek];
+        b.totalShots += b.shots[Season.gameWeek];
+        if (a.score[Season.gameWeek] > b.score[Season.gameWeek]) Win(a,b);
         else Win(b,a);
-        Utilities.KeyPress();
     }
 
     private static void Win(Team w,Team l)
     {
-        
+        w.GamesPlayed++;
+        w.Win++;
+        l.GamesPlayed++;
+        l.Loss++;
     }
 
 

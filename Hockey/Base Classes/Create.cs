@@ -66,7 +66,7 @@ public class Create
     public static void Bottom()
     {
         //How many bottom players?
-        int total = 100 - (defenceList.Count + forwardList.Count);
+        int total = 125 - (defenceList.Count + forwardList.Count);
         int defence = Convert.ToInt32(0.4 * total);
         int forward = total - defence;
         //Generate bottom players
