@@ -35,3 +35,10 @@ C:\MHL\Hockey\bin\Debug\MHL.exe
 C:\MHL\Hockey\bin\Debug\MHL.pdb
 C:\MHL\Hockey\obj\Debug\MHL.exe
 C:\MHL\Hockey\obj\Debug\MHL.pdb
+C:\Users\tmarcott\Source\Repos\Marcotte173\MHL\Hockey\bin\Debug\MHL.exe.config
+C:\Users\tmarcott\Source\Repos\Marcotte173\MHL\Hockey\bin\Debug\MHL.exe
+C:\Users\tmarcott\Source\Repos\Marcotte173\MHL\Hockey\bin\Debug\MHL.pdb
+C:\Users\tmarcott\Source\Repos\Marcotte173\MHL\Hockey\obj\Debug\MHL.csproj.AssemblyReference.cache
+C:\Users\tmarcott\Source\Repos\Marcotte173\MHL\Hockey\obj\Debug\MHL.csproj.CoreCompileInputs.cache
+C:\Users\tmarcott\Source\Repos\Marcotte173\MHL\Hockey\obj\Debug\MHL.exe
+C:\Users\tmarcott\Source\Repos\Marcotte173\MHL\Hockey\obj\Debug\MHL.pdb

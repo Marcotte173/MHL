@@ -16,11 +16,12 @@ public class PlayerTeam:Team
     public override void Draft(List<Player> f, List<Player> d, List<Player> g, Player chosen, int round)
     {
         Console.WriteLine($"\nYou currently have {forward}/10 forwards, {defence}/5 defencemen, and {goalie}/2 goalies.\n\nYou have ${money} available\n");
-        Console.WriteLine("What would you like to view? \n\n[1]Available players\n[2]Current team");
+        Console.WriteLine("What would you like to view? \n\n[1]Available players\n[2]Current team\n[*]Auto Draft");
         string choice = Console.ReadKey(true).KeyChar.ToString().ToLower();
         if (choice == "1") Available(f, d, g, chosen);
         else if (choice == "x") money = 0;
         else if (choice == "2") Current(f, d, g, chosen);
+        else if (choice == "*") Current(f, d, g, chosen);
         global::Draft.Menu();
     }
 
